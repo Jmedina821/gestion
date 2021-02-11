@@ -48,6 +48,7 @@ class MunicipioSeeder extends Seeder
         Parroquia::create(["name" => "Paso Real de Macaira", "code" => "4", "municipio_id" => $monagas->id]);
         Parroquia::create(["name" => "San Francisco de Macaira", "code" => "5", "municipio_id" => $monagas->id]);
         Parroquia::create(["name" => "Sabana Larga de Orituco", "code" => "6", "municipio_id" => $monagas->id]);
+        Parroquia::create(["name" => "Carlos Soublette", "code" => "6", "municipio_id" => $monagas->id]);
 
         Parroquia::create(["name" => "Tucupido", "code" => "1", "municipio_id" => $ribas->id]);
         Parroquia::create(["name" => "San Rafael de Laya", "code" => "2", "municipio_id" => $ribas->id]);
