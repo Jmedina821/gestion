@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             InstitutionSeeder::class,
             InvestmentAreaSeeder::class,
             ProjectStatusSeeder::class,
+            MunicipioSeeder::class
         ]);
     }
 }
