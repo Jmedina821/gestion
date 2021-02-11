@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\ParroquiaService;
 use App\Models\Parroquia;
 use Illuminate\Http\Request;
 
 class ParroquiaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    private $parroquiaService;
+
     public function index()
     {
-        //
-}
+        $this->parroquiaService = new ParroquiaService;
+    }
 
     /**
      * Store a newly created resource in storage.

@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\BudgetService;
 use App\Models\Budget;
 use Illuminate\Http\Request;
 
 class BudgetController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    private $budgetService;
+
     public function index()
     {
-        //
-}
+        $this->budgetService = new BudgetService;
+    }
 
     /**
      * Store a newly created resource in storage.

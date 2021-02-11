@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\ActivityService;
 use App\Models\Activity;
 use Illuminate\Http\Request;
 
 class ActivityController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    private $activityService;
+
+    public function __construct()
+    {
+        $this->activityService = new ActivityService;
+    }
+
     public function index()
     {
         //

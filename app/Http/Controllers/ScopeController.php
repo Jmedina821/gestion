@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\ScopeService;
 use App\Models\Scope;
 use Illuminate\Http\Request;
 
 class ScopeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    private $scopeService;
+
     public function index()
     {
-        //
-}
+        $this->scopeService = new ScopeService;
+    }
 
     /**
      * Store a newly created resource in storage.

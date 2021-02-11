@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\InvestmentAreaService;
 use App\Models\InvesmentArea;
 use Illuminate\Http\Request;
 
 class InvesmentAreaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    private $invesmentAreaService;
+
     public function index()
     {
-        //
+        $this->invesmentAreaService = new InvestmentAreaService;
 }
 
     /**

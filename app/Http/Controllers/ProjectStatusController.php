@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\ProjectService;
 use App\Models\ProjectStatus;
 use Illuminate\Http\Request;
 
 class ProjectStatusController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    private $projectStatusService;
+
     public function index()
     {
-        //
-}
+        $this->projectStatusService = new ProjectService;
+    }
 
     /**
      * Store a newly created resource in storage.

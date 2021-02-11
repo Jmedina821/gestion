@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\SectorService;
 use App\Models\Sector;
 use Illuminate\Http\Request;
 
 class SectorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    private $sectorService;
+
     public function index()
     {
-        //
-}
+        $this->sectorService = new SectorService;
+    }
 
     /**
      * Store a newly created resource in storage.

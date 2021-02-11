@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\InstitutionService;
 use App\Models\Institution;
 use Illuminate\Http\Request;
 
 class InstitutionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    private $institutionService;
+
     public function index()
     {
-        //
-}
+        $this->institutionService = new InstitutionService;
+    }
 
     /**
      * Store a newly created resource in storage.

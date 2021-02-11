@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\ModuleService;
 use App\Models\Module;
 use Illuminate\Http\Request;
 
 class ModuleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    private $moduleService;
+
     public function index()
     {
-        //
-}
+        $this->moduleService = new ModuleService;
+    }
 
     /**
      * Store a newly created resource in storage.

@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\MeasurementService;
 use App\Models\Measurement;
 use Illuminate\Http\Request;
 
 class MeasurementController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    private $measurementService;
+
     public function index()
     {
-        //
+        $this->measurementService = new MeasurementService;
 }
 
     /**
