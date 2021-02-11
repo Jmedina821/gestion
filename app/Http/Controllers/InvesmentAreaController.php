@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\InvestmentAreaService;
-use App\Models\InvesmentArea;
+use App\Models\InvestmentArea;
 use Illuminate\Http\Request;
 
 class InvesmentAreaController extends Controller
@@ -33,7 +33,7 @@ class InvesmentAreaController extends Controller
      * @param  \App\Models\InvesmentArea  $invesmentArea
      * @return \Illuminate\Http\Response
      */
-    public function show(InvesmentArea $invesmentArea)
+    public function show(InvestmentArea $invesmentArea)
     {
         //
     }
@@ -44,7 +44,7 @@ class InvesmentAreaController extends Controller
      * @param  \App\Models\InvesmentArea  $invesmentArea
      * @return \Illuminate\Http\Response
      */
-    public function edit(InvesmentArea $invesmentArea)
+    public function edit(InvestmentArea $invesmentArea)
     {
         //
     }
@@ -56,7 +56,7 @@ class InvesmentAreaController extends Controller
      * @param  \App\Models\InvesmentArea  $invesmentArea
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, InvesmentArea $invesmentArea)
+    public function update(Request $request, InvestmentArea $invesmentArea)
     {
         //
     }
@@ -67,7 +67,7 @@ class InvesmentAreaController extends Controller
      * @param  \App\Models\InvesmentArea  $invesmentArea
      * @return \Illuminate\Http\Response
      */
-    public function destroy(InvesmentArea $invesmentArea)
+    public function destroy(InvestmentArea $invesmentArea)
     {
         //
     }
