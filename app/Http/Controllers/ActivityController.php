@@ -6,6 +6,7 @@ use App\Http\Services\ActivityService;
 use App\Http\Traits\ApiCrud;
 use App\Models\Activity;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ActivityController extends Controller
 {
@@ -21,7 +22,12 @@ class ActivityController extends Controller
 
     public function store(Request $request)
     {
-        return $this->activityService->store($request->all());
+        return $this->activityService->store($request->all(), $request->file('images'));
+    }
+
+    public function index(Request $request)
+    {
+        return $this->activityService->index($request->project_id, $request->institution_id);
     }
 
     public function model()
@@ -38,6 +44,7 @@ class ActivityController extends Controller
             "init_date" => 'required',
             "estimated_population" => 'required',
             "benefited_population" => 'required',
+            "images" => 'mimes:png,jpg,jpeg'
         ];
     }
 }

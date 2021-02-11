@@ -16,5 +16,8 @@ class Institution extends Model
     {
         return $this->belongsTo(Sector::class);
     }
-
+    public function children()
+    {
+        return Institution::where('parent_id', $this->id)->get();
+    }
 }

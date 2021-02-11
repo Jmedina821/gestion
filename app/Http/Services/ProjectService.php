@@ -21,7 +21,7 @@ class ProjectService
 
     public function index(string $program_id = null, string $institution_id = null)
     {
-        $projects = Project::with('program', 'investmentAreas', 'measurement', 'project_status', 'budgets');
+        $projects = Project::with('program', 'investmentAreas', 'measurement', 'project_status', 'budgets.budgetSource');
         if (isset($program_id)) {
             $projects = $projects->where('program_id', $program_id);
         }
