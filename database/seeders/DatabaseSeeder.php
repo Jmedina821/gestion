@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             InvestmentAreaSeeder::class,
             ProjectStatusSeeder::class,
             MunicipioSeeder::class,
-            MeasurementSeeder::class
+            MeasurementSeeder::class,
+            UserSeeder::class
         ]);
     }
 }
