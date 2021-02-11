@@ -17,6 +17,7 @@ class MunicipioController extends Controller
     {
         $this->municipioService = new MunicipioService;
     }
+
     public function model()
     {
         return Municipio::class;

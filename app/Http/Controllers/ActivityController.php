@@ -19,6 +19,11 @@ class ActivityController extends Controller
         $this->activityService = new ActivityService;
     }
 
+    public function store(Request $request)
+    {
+        return $this->activityService->store($request->all());
+    }
+
     public function model()
     {
         return Activity::class;

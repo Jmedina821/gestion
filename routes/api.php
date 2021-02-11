@@ -18,6 +18,8 @@ use App\Http\Controllers\SectorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+Route::get('institutions-filtered', [InstitutionController::class, 'filtered']);
+
 Route::resource('institution', InstitutionController::class);
 Route::resource('activity', ActivityController::class);
 Route::resource('budget', BudgetController::class);

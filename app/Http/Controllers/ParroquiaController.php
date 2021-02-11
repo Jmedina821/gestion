@@ -17,6 +17,12 @@ class ParroquiaController extends Controller
     {
         $this->parroquiaService = new ParroquiaService;
     }
+
+    public function index(Request $request)
+    {
+        return $this->parroquiaService->index($request->municipio_id);
+    }
+
     public function model()
     {
         return Parroquia::class;

@@ -18,6 +18,14 @@ class InstitutionController extends Controller
         $this->institutionService = new InstitutionService;
     }
 
+    public function filtered(Request $request)
+    {
+        return $this->institutionService->getAllInstitutions(
+            $request->onlyParent,
+            $request->filter
+        );
+    }
+
     public function model()
     {
         return Institution::class;

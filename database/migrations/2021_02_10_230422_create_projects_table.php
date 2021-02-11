@@ -19,8 +19,6 @@ class CreateProjectsTable extends Migration
             $table->mediumText('description')->nullable();
             $table->uuid('program_id');
             $table->foreign('program_id')->references('id')->on('programs');
-            $table->uuid('investment_area_id');
-            $table->foreign('investment_area_id')->references('id')->on('investment_areas');
             $table->uuid('measurement_id');
             $table->foreign('measurement_id')->references('id')->on('measurements');
             $table->uuid('project_status_id');

@@ -17,6 +17,12 @@ class ProgramController extends Controller
     {
         $this->programService = new ProgramService;
     }
+
+    public function index(Request $request)
+    {
+        return $this->programService->index($request->institution_id);
+    }
+
     public function model()
     {
         return Program::class;
@@ -26,7 +32,7 @@ class ProgramController extends Controller
         return [
             'name' => 'required',
             'description' => 'required',
-            'insitution_id' => 'required'
+            'institution_id' => 'required'
         ];
     }
 }

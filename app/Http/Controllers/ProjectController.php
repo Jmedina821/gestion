@@ -17,6 +17,17 @@ class ProjectController extends Controller
     {
         $this->projectService = new ProjectService;
     }
+
+    public function index(Request $request)
+    {
+        return $this->projectService->index($request->program_id, $request->institution_id);
+    }
+
+    public function store(Request $request)
+    {
+        return $this->projectService->store($request->all());
+    }
+
     public function model()
     {
         return Project::class;
@@ -27,7 +38,6 @@ class ProjectController extends Controller
             'name' => 'required',
             'description' => 'required',
             'program_id' => 'required',
-            'investment_area_id' => 'required',
             'measurement_id' => 'required',
             'project_status_id' => 'required',
             'measurement_value' => 'required',

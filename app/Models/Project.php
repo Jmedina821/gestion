@@ -15,7 +15,6 @@ class Project extends Model
         'name',
         'description',
         'program_id',
-        'investment_area_id',
         'measurement_id',
         'project_status_id',
         'measurement_value',
@@ -33,7 +32,7 @@ class Project extends Model
         return  $this->belongsTo(Program::class);
     }
 
-    public function investmentArea()
+    public function investmentAreas()
     {
         return  $this->belongsToMany(InvestmentArea::class);
     }
@@ -43,8 +42,12 @@ class Project extends Model
         return  $this->belongsTo(Measurement::class);
     }
 
-    public function status()
+    public function project_status()
     {
         return $this->belongsTo(ProjectStatus::class);
+    }
+    public function budgets()
+    {
+        return $this->hasMany(Budget::class);
     }
 }
