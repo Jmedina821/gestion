@@ -20,7 +20,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'institution_id'
     ];
+
+    public function institution()
+    {
+        return $this->belongsTo(Institution::class);
+    }
 
     /**
      * The attributes that should be hidden for arrays.

@@ -10,5 +10,7 @@ class ProjectStatus extends Model
 {
     use HasFactory, Uuid;
 
-    
+    protected $fillable = ["name", "is_final"];
+
+    protected $casts = ["is_final" => "boolean"];
 }

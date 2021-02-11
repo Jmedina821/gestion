@@ -12,4 +12,8 @@ class Module extends Model
 
     protected $fillable = ["name", "label"];
 
+    public function scopes()
+    {
+        return $this->hasMany('scopes');
+    }
 }

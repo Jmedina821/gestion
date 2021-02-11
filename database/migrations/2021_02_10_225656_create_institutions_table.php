@@ -16,7 +16,7 @@ class CreateInstitutionsTable extends Migration
         Schema::create('institutions', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name')->unique();
-            $table->string('parent_id');
+            $table->string('parent_id')->nullable();
             $table->uuid('sector_id')->nullable();
             $table->foreign('sector_id')->references('id')
                 ->on('sectors')->onDelete('set null');
