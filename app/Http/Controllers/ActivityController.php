@@ -27,7 +27,13 @@ class ActivityController extends Controller
 
     public function index(Request $request)
     {
-        return $this->activityService->index($request->project_id, $request->institution_id);
+        return $this->activityService->index(
+            $request->project_id,
+            $request->institution_id,
+            $request->municipio_id,
+            $request->parroquia_id,
+            $request->gobernador
+        );
     }
 
     public function model()

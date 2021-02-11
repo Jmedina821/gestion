@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Http\Traits\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use phpDocumentor\Reflection\Types\Boolean;
 
 class Project extends Model
 {
@@ -26,6 +25,12 @@ class Project extends Model
     protected $casts = [
         "is_planified" => 'boolean'
     ];
+
+    protected $appends = ["total_activities"];
+
+    public function getTotalActivitiesAttribute() {
+        return Activity::where('project_id', $this->attributes["id"])->count();
+    }
 
     public function program()
     {

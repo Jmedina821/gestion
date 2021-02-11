@@ -20,7 +20,13 @@ class ProjectController extends Controller
 
     public function index(Request $request)
     {
-        return $this->projectService->index($request->program_id, $request->institution_id);
+        return $this->projectService->index(
+            $request->program_id,
+            $request->institution_id,
+            $request->investment_areas,
+            $request->project_status_id,
+            $request->is_planified
+        );
     }
 
     public function store(Request $request)
