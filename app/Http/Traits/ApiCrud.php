@@ -15,7 +15,7 @@ trait ApiCrud
         return $this->model()::all();
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
         Validator::make($request->all(), $this->validationRules())->validate();
 
@@ -36,7 +36,7 @@ trait ApiCrud
         return $resource->update($request->all());
     }
 
-    public function delete($resource_id)
+    public function destroy($resource_id)
     {
         $resource = $this->model()::findOrFail($resource_id);
 

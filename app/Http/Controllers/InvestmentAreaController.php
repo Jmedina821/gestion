@@ -2,25 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Services\ModuleService;
+use App\Http\Services\InvestmentAreaService;
 use App\Http\Traits\ApiCrud;
-use App\Models\Module;
+use App\Models\InvestmentArea;
 use Illuminate\Http\Request;
 
-class ModuleController extends Controller
+class InvestmentAreaController extends Controller
 {
     use ApiCrud;
-
-    private $moduleService;
+    private $invesmentAreaService;
 
     public function __construct()
     {
-        $this->moduleService = new ModuleService;
+        $this->invesmentAreaService = new InvestmentAreaService;
     }
-
     public function model()
     {
-        return Module::class;
+        return InvestmentArea::class;
     }
     public function validationRules($resource_id = 0)
     {

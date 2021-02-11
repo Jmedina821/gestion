@@ -3,72 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\ParroquiaService;
+use App\Http\Traits\ApiCrud;
 use App\Models\Parroquia;
 use Illuminate\Http\Request;
 
 class ParroquiaController extends Controller
 {
+    use ApiCrud;
 
     private $parroquiaService;
 
-    public function index()
+    public function __construct()
     {
         $this->parroquiaService = new ParroquiaService;
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function model()
     {
-        //
+        return Parroquia::class;
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Parroquia  $parroquia
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Parroquia $parroquia)
+    public function validationRules($resource_id = 0)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Parroquia  $parroquia
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Parroquia $parroquia)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Parroquia  $parroquia
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Parroquia $parroquia)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Parroquia  $parroquia
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Parroquia $parroquia)
-    {
-        //
+        return ['name' => 'required', 'municipio_id' => 'required', 'code' => 'required'];
     }
 }

@@ -3,72 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\ScopeService;
+use App\Http\Traits\ApiCrud;
 use App\Models\Scope;
 use Illuminate\Http\Request;
 
 class ScopeController extends Controller
 {
-
+    use ApiCrud;
     private $scopeService;
 
-    public function index()
+    public function __construct()
     {
         $this->scopeService = new ScopeService;
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function model()
     {
-        //
+        return Scope::class;
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Scope  $scope
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Scope $scope)
+    public function validationRules($resource_id = 0)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Scope  $scope
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Scope $scope)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Scope  $scope
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Scope $scope)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Scope  $scope
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Scope $scope)
-    {
-        //
+        return [
+            'name' => 'required',
+            'module_id' => 'required'
+        ];
     }
 }

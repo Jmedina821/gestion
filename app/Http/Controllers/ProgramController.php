@@ -3,72 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\ProgramService;
+use App\Http\Traits\ApiCrud;
 use App\Models\Program;
 use Illuminate\Http\Request;
 
 class ProgramController extends Controller
 {
+    use ApiCrud;
 
     private $programService;
 
-    public function index()
+    public function __construct()
     {
         $this->programService = new ProgramService;
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function model()
     {
-        //
+        return Program::class;
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Program  $program
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Program $program)
+    public function validationRules($resource_id = 0)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Program  $program
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Program $program)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Program  $program
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Program $program)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Program  $program
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Program $program)
-    {
-        //
+        return [
+            'name' => 'required',
+            'description' => 'required',
+            'insitution_id' => 'required'
+        ];
     }
 }

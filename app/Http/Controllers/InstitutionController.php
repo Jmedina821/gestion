@@ -3,72 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\InstitutionService;
+use App\Http\Traits\ApiCrud;
 use App\Models\Institution;
 use Illuminate\Http\Request;
 
 class InstitutionController extends Controller
 {
+    use ApiCrud;
 
     private $institutionService;
 
-    public function index()
+    public function __construct()
     {
         $this->institutionService = new InstitutionService;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function model()
     {
-        //
+        return Institution::class;
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Institution  $institution
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Institution $institution)
+    public function validationRules($resource_id = 0)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Institution  $institution
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Institution $institution)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Institution  $institution
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Institution $institution)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Institution  $institution
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Institution $institution)
-    {
-        //
+        return ['name' => 'required'];
     }
 }

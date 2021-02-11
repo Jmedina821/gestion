@@ -3,72 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\BudgetService;
+use App\Http\Traits\ApiCrud;
 use App\Models\Budget;
 use Illuminate\Http\Request;
 
 class BudgetController extends Controller
 {
-
+    use ApiCrud;
     private $budgetService;
 
-    public function index()
+    public function __construct()
     {
         $this->budgetService = new BudgetService;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function model()
     {
-        //
+        return Budget::class;
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Budget  $budget
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Budget $budget)
+    public function validationRules($resource_id = 0)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Budget  $budget
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Budget $budget)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Budget  $budget
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Budget $budget)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Budget  $budget
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Budget $budget)
-    {
-        //
+        return [
+            'value' => 'required',
+            'project_id' => 'required',
+            'budget_source_id' => 'required',
+        ];
     }
 }

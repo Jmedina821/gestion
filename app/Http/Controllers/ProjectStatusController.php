@@ -3,72 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\ProjectService;
+use App\Http\Traits\ApiCrud;
 use App\Models\ProjectStatus;
 use Illuminate\Http\Request;
 
 class ProjectStatusController extends Controller
 {
-
+    use ApiCrud;
     private $projectStatusService;
 
-    public function index()
+    public function __construct()
     {
         $this->projectStatusService = new ProjectService;
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function model()
     {
-        //
+        return ProjectStatus::class;
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\ProjectStatus  $projectStatus
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ProjectStatus $projectStatus)
+    public function validationRules($resource_id = 0)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ProjectStatus  $projectStatus
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ProjectStatus $projectStatus)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ProjectStatus  $projectStatus
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, ProjectStatus $projectStatus)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\ProjectStatus  $projectStatus
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(ProjectStatus $projectStatus)
-    {
-        //
+        return [
+            'name' => 'required',
+            'is_final' => 'required'
+        ];
     }
 }

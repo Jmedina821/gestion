@@ -3,72 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\ProjectService;
+use App\Http\Traits\ApiCrud;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
+    use ApiCrud;
 
     private $projectService;
 
-    public function index()
+    public function __construct()
     {
         $this->projectService = new ProjectService;
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function model()
     {
-        //
+        return Project::class;
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Project  $project
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Project $project)
+    public function validationRules($resource_id = 0)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Project  $project
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Project $project)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Project  $project
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Project $project)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Project  $project
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Project $project)
-    {
-        //
+        return [
+            'name' => 'required',
+            'description' => 'required',
+            'program_id' => 'required',
+            'investment_area_id' => 'required',
+            'measurement_id' => 'required',
+            'project_status_id' => 'required',
+            'measurement_value' => 'required',
+            'is_planified' => 'required',
+            'init_date' => 'required'
+        ];
     }
 }

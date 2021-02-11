@@ -3,72 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\MeasurementService;
+use App\Http\Traits\ApiCrud;
 use App\Models\Measurement;
 use Illuminate\Http\Request;
 
 class MeasurementController extends Controller
 {
-
+    use ApiCrud;
     private $measurementService;
 
-    public function index()
+    public function __construct()
     {
         $this->measurementService = new MeasurementService;
-}
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Measurement  $measurement
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Measurement $measurement)
+    public function model()
     {
-        //
+        return Measurement::class;
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Measurement  $measurement
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Measurement $measurement)
+    public function validationRules($resource_id = 0)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Measurement  $measurement
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Measurement $measurement)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Measurement  $measurement
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Measurement $measurement)
-    {
-        //
+        return ['name' => 'required', 'short_name' => 'required'];
     }
 }

@@ -3,72 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\MunicipioService;
+use App\Http\Traits\ApiCrud;
 use App\Models\Municipio;
 use Illuminate\Http\Request;
 
 class MunicipioController extends Controller
 {
-
+    use ApiCrud;
+    
     private $municipioService;
 
-    public function index()
+    public function __construct()
     {
         $this->municipioService = new MunicipioService;
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function model()
     {
-        //
+        return Municipio::class;
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Municipio  $municipio
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Municipio $municipio)
+    public function validationRules($resource_id = 0)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Municipio  $municipio
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Municipio $municipio)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Municipio  $municipio
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Municipio $municipio)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Municipio  $municipio
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Municipio $municipio)
-    {
-        //
+        return ['name' => 'required', 'code' => 'required'];
     }
 }
