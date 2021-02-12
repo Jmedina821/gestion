@@ -16,6 +16,7 @@ class InvestmentSubAreaSeeder extends Seeder
     public function run()
     {
         $servicios_publicos = InvestmentArea::where('name', '=', 'SERVICIOS PUBLICOS')->first();
+        $salud = InvestmentArea::where('name', '=', 'SALUD')->first();
         $sub_areas = [
             [
                 "name" => 'Gas Domestico',
@@ -24,8 +25,16 @@ class InvestmentSubAreaSeeder extends Seeder
             [
                 "name" => 'Electricidad',
                 "investment_area_id" => $servicios_publicos->id
-            ],
+            ],[
+                "name" => 'CDI',
+                "investment_area_id" => $salud->id
+            ],[
+                "name" => 'Hostpital',
+                "investment_area_id" => $salud->id
+            ]
         ];
+
+
 
         foreach ($sub_areas as $sub_area) {
             InvestmentSubArea::create($sub_area);
