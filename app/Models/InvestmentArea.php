@@ -16,5 +16,10 @@ class InvestmentArea extends Model
     {
         return $this->morphMany(Image::class, 'imageable');
     }
+    
+    public function investmentSubAreas()
+    {
+        return $this->hasMany(investmentSubAreas::class);
+    }
 
 }

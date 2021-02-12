@@ -10,7 +10,7 @@ class Institution extends Model
 {
     use HasFactory, Uuid;
 
-    protected $fillable = ["name", "parent_id", "sector_id"];
+    protected $fillable = ["name", "parent_id", "sector_id", "mision", "vision"];
 
     public function sector()
     {
@@ -19,5 +19,9 @@ class Institution extends Model
     public function children()
     {
         return Institution::where('parent_id', $this->id)->get();
+    }
+    public function user()
+    {
+        return $this->hasMany('App\Models\User');
     }
 }
