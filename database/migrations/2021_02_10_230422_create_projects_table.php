@@ -23,7 +23,7 @@ class CreateProjectsTable extends Migration
             $table->foreign('measurement_id')->references('id')->on('measurements');
             $table->uuid('project_status_id');
             $table->foreign('project_status_id')->references('id')->on('project_statuses');
-            $table->decimal('measurement_value');
+            $table->decimal('measurement_value',10,2);
             $table->boolean('is_planified');
             $table->date('init_date');
             $table->date('end_date')->nullable();
