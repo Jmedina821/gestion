@@ -54,7 +54,8 @@ class UserController extends Controller
         $user = User::where("email", $request->email)->first();
 
         if (is_null($user)) {
-            return response()->json(["status" => "failed", "message" => "Failed! email not found"]);
+            return response()->json(["status" => "failed", 
+            "message" => "Failed! email not found"], 404);
         }
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
@@ -63,7 +64,7 @@ class UserController extends Controller
 
             return response()->json(["status" => "success", "login" => true, "token" => $token, "data" => $user]);
         } else {
-            return response()->json(["status" => "failed", "success" => false, "message" => "Whoops! invalid password"]);
+            return response()->json(["status" => "failed", "success" => false, "message" => "Whoops! invalid password"], 401);
         }
     }
 
