@@ -16,6 +16,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ScopeController;
 use App\Http\Controllers\SectorController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\InvestmentSubAreaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,7 +37,7 @@ Route::resource('project-status', ProjectStatusController::class);
 Route::resource('role', RoleController::class);
 Route::resource('scope', ScopeController::class);
 Route::resource('sector', SectorController::class);
-
+Route::resource('investment-sub-area', InvestmentSubAreaController::class);
 
 // user controller routes
 
