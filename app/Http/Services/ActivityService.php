@@ -53,13 +53,16 @@ class ActivityService
     public function store(array $activityData, array $images)
     {
         DB::beginTransaction();
-        foreach ($images as $image) {
-            $image->store('images');
-        }
         $activity = Activity::create(array_merge(
             $activityData,
             ["gobernador" => $activityData["gobernador"] == 'SI']
         ));
+        $imagesToSave = [];
+        foreach ($images as $image) {
+            $storedImage = $image->store('images');
+            array_push($imagesToSave, ["path" => $storedImage]);
+        }
+        $activity->images()->createMany($imagesToSave);
         DB::commit();
         return $activity;
     }
