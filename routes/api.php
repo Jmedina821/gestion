@@ -42,3 +42,4 @@ Route::resource('sector', SectorController::class);
 
 
 Route::post("login", [UserController::class, "login"]);
+Route::post("user", [UserController::class, "register"]);

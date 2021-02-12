@@ -20,4 +20,8 @@ class Institution extends Model
     {
         return Institution::where('parent_id', $this->id)->get();
     }
+    public function user()
+    {
+        return $this->hasMany('App\Models\User');
+    }
 }

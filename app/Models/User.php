@@ -48,4 +48,9 @@ class User extends Authenticatable
     {
          return $this->hasMany('App\Models\Task');
     }
+
+    public function institution()
+    {
+        return $this->belongsTo('App\Models\Institution');
+    }
 }
