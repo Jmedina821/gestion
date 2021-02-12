@@ -43,3 +43,4 @@ Route::resource('investment-sub-area', InvestmentSubAreaController::class);
 
 
 Route::post("login", [UserController::class, "login"]);
+Route::post("user", [UserController::class, "register"]);

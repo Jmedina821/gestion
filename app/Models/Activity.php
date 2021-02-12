@@ -37,4 +37,9 @@ class Activity extends Model
     {
         return $this->belongsTo(Parroquia::class);
     }
+
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }
