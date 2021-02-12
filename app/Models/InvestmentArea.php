@@ -11,4 +11,10 @@ class InvestmentArea extends Model
     use HasFactory, Uuid;
 
     protected $fillable = ["name"];
+
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
+
 }

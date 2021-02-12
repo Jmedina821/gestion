@@ -17,7 +17,7 @@ class ActivityService
         string $gobernador = null
     ) {
         
-        $activities = Activity::with('project.program.institution', 'parroquia.municipio');
+        $activities = Activity::with('project.program.institution', 'parroquia.municipio', 'images');
 
         if (isset($project_id)) {
             $activities = $activities->where('project_id', '=', $project_id);

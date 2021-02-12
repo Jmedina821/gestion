@@ -6,7 +6,7 @@ use App\Http\Services\ActivityService;
 use App\Http\Traits\ApiCrud;
 use App\Models\Activity;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class ActivityController extends Controller
 {
@@ -22,6 +22,7 @@ class ActivityController extends Controller
 
     public function store(Request $request)
     {
+        Validator::make($request->all(), $this->validationRules())->validate();
         return $this->activityService->store($request->all(), $request->file('images'));
     }
 
@@ -50,7 +51,7 @@ class ActivityController extends Controller
             "init_date" => 'required',
             "estimated_population" => 'required',
             "benefited_population" => 'required',
-            "images" => 'mimes:png,jpg,jpeg'
+            "images.*" => 'mimes:png,jpg,jpeg'
         ];
     }
 }
