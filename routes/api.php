@@ -17,7 +17,7 @@ use App\Http\Controllers\ScopeController;
 use App\Http\Controllers\SectorController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\InvestmentSubAreaController;
-use Barryvdh\Snappy\Facades\SnappyPdf;
+use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -40,7 +40,8 @@ Route::resource('scope', ScopeController::class);
 Route::resource('sector', SectorController::class);
 Route::resource('investment-sub-area', InvestmentSubAreaController::class);
 Route::get('pdf-test', function(){
-    return SnappyPdf::loadView('reportes.proyecto1')->inline('reporte.pdf');
+    return PDF::loadView('reportes.proyecto1')
+    ->setPaper('a4')->setOrientation('landscape')->inline('reporte.pdf');
 });
 // user controller routes
 
