@@ -32,14 +32,19 @@ class Project extends Model
         return Activity::where('project_id', $this->attributes["id"])->count();
     }
 
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
+    }
+
     public function program()
     {
         return  $this->belongsTo(Program::class);
     }
 
-    public function investmentAreas()
+    public function investmentSubAreas()
     {
-        return  $this->belongsToMany(InvestmentArea::class);
+        return  $this->belongsToMany(InvestmentSubArea::class);
     }
 
     public function measurement()

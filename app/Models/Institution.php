@@ -12,6 +12,16 @@ class Institution extends Model
 
     protected $fillable = ["name", "parent_id", "sector_id", "mision", "vision"];
 
+    protected $appends = ["parent"];
+
+    public function getParentAttribute()
+    {
+        if(isset($this->parent_id)) {
+            return Institution::find($this->parent_id);
+        }
+        return null;
+    }
+
     public function sector()
     {
         return $this->belongsTo(Sector::class);

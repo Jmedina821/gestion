@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\ProjectService;
+use App\Http\Services\ReportService;
 use App\Http\Traits\ApiCrud;
 use App\Models\Project;
+use Barryvdh\Snappy\Facades\SnappyPdf;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -12,10 +14,11 @@ class ProjectController extends Controller
     use ApiCrud;
 
     private $projectService;
-
+    private $reportService;
     public function __construct()
     {
         $this->projectService = new ProjectService;
+        $this->reportService = new ReportService;
     }
 
     public function index(Request $request)
@@ -51,4 +54,11 @@ class ProjectController extends Controller
             'init_date' => 'required'
         ];
     }
+
+    public function generalReport($id) {
+        $data = $this->reportService->reporteGeneralPPA($id);
+        return SnappyPdf::loadView('reportes.proyecto1', $data)
+        ->setPaper('a4')->setOrientation('landscape')->inline('reporte.pdf');
+    }
+
 }

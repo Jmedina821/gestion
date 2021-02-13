@@ -19,17 +19,17 @@ class InvestmentSubAreaSeeder extends Seeder
         $salud = InvestmentArea::where('name', '=', 'SALUD')->first();
         $sub_areas = [
             [
-                "name" => 'Gas Domestico',
+                "name" => 'GAS DOMESTICO',
                 "investment_area_id" => $servicios_publicos->id
             ],
             [
-                "name" => 'Electricidad',
+                "name" => 'ELECTRICIDAD',
                 "investment_area_id" => $servicios_publicos->id
             ],[
-                "name" => 'CDI',
+                "name" => 'ATENCION MEDICA',
                 "investment_area_id" => $salud->id
             ],[
-                "name" => 'Hostpital',
+                "name" => 'INSUMOS MEDICOS',
                 "investment_area_id" => $salud->id
             ]
         ];

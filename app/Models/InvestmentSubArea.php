@@ -14,6 +14,6 @@ class InvestmentSubArea extends Model
 
     public function investmentArea()
     {
-        return $this->belongsTo(investmentArea::class);
+        return $this->belongsTo(InvestmentArea::class);
     }
 }

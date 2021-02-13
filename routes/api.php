@@ -17,8 +17,6 @@ use App\Http\Controllers\ScopeController;
 use App\Http\Controllers\SectorController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\InvestmentSubAreaController;
-use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('institutions-filtered', [InstitutionController::class, 'filtered']);
@@ -33,18 +31,14 @@ Route::resource('module', ModuleController::class);
 Route::resource('municipio', MunicipioController::class);
 Route::resource('parroquia', ParroquiaController::class);
 Route::resource('program', ProgramController::class);
+
+Route::get('project/ppareport/{id}', [ProjectController::class, 'generalReport']);
 Route::resource('project', ProjectController::class);
 Route::resource('project-status', ProjectStatusController::class);
 Route::resource('role', RoleController::class);
 Route::resource('scope', ScopeController::class);
 Route::resource('sector', SectorController::class);
 Route::resource('investment-sub-area', InvestmentSubAreaController::class);
-Route::get('pdf-test', function(){
-    return PDF::loadView('reportes.proyecto1')
-    ->setPaper('a4')->setOrientation('landscape')->inline('reporte.pdf');
-});
-// user controller routes
-
 
 Route::post("login", [UserController::class, "login"]);
 Route::post("user", [UserController::class, "register"]);
