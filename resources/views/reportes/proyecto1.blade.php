@@ -41,7 +41,7 @@
         GOBERNACIÓN DEL ESTADO BOLIVARIANO DE GUÁRICO
       </td>
       <td align="right">
-        <img width="75" src="/home/jesus/Documentos/code/gestion/public/guarico.png"></img>
+        <img width="75" src="/var/www/html/actividades/api/public/guarico.png"></img>
       </td>
     </tr>
   </table>
@@ -132,10 +132,10 @@
       <td class="title-style bordered strong" colspan="4">3- GRAFICAS</td>
     </tr>
     <tr>
-      <td class="bordered" align="center"><img width="95" src="/home/jesus/Documentos/code/gestion/public/chart-example.png"></img></td>
-      <td class="bordered" align="center"><img width="95" src="/home/jesus/Documentos/code/gestion/public/chart-example.png"></img></td>
-      <td class="bordered" align="center"><img width="95" src="/home/jesus/Documentos/code/gestion/public/chart-example.png"></img></td>
-      <td class="bordered" align="center"><img width="95" src="/home/jesus/Documentos/code/gestion/public/chart-example.png"></img></td>
+      <td class="bordered" align="center"><img width="95" src="/var/www/html/actividades/api/public/chart-example.png"></img></td>
+      <td class="bordered" align="center"><img width="95" src="/var/www/html/actividades/api/public/chart-example.png"></img></td>
+      <td class="bordered" align="center"><img width="95" src="/var/www/html/actividades/api/public/chart-example.png"></img></td>
+      <td class="bordered" align="center"><img width="95" src="/var/www/html/actividades/api/public/chart-example.png"></img></td>
     </tr>
     <tr>
       <td class="bordered title-style">UNIDAD DE MEDIDA</td>
