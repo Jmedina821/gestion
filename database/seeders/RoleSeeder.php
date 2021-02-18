@@ -19,5 +19,13 @@ class RoleSeeder extends Seeder
             ->scopes()->attach(Scope::all()->map(function ($scope) {
                 return $scope->id;
             }));
+            Role::create(['name' => 'secretario'])
+            ->scopes()->attach([
+                Scope::where('scope','=',"programs:menu")->get()->first()->id,
+                Scope::where('scope','=',"programs:create")->get()->first()->id,
+                Scope::where('scope','=',"programs:delete")->get()->first()->id,
+                Scope::where('scope','=',"programs:update")->get()->first()->id,
+                Scope::where('scope','=',"programs:read")->get()->first()->id
+            ]);
     }
 }

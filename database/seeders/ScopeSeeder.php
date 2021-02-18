@@ -23,7 +23,8 @@ class ScopeSeeder extends Seeder
             ["name" => "activities", "label" => "Actividades" ],
             ["name" => "scopes", "label" => "Permisos" ],              
             ["name" => "roles", "label" => "Roles" ],              
-            ["name" => "modules", "label" => "Modulos" ]
+            ["name" => "modules", "label" => "Modulos" ],
+            ["name" => "statistics", "label" => "Estadisticas" ],
         ];
     
         $modules = [
@@ -82,6 +83,13 @@ class ScopeSeeder extends Seeder
                 ["name" => "eliminar", "scope" => "modules:delete"],
                 ["name" => "editar", "scope" => "modules:update"],
                 ["name" => "ver", "scope" => "modules:read"],
+            ],
+            "statistics" => [
+                ["name" => "menu", "scope" => "statistics:menu"],
+                ["name" => "crear", "scope" => "statistics:create"],
+                ["name" => "eliminar", "scope" => "statistics:delete"],
+                ["name" => "editar", "scope" => "statistics:update"],
+                ["name" => "ver", "scope" => "statistics:read"],
             ]
         ];
 

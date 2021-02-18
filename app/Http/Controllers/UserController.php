@@ -64,8 +64,9 @@ class UserController extends Controller
             $scopes = $user->role->scopes->map( function ($scope){
                 return $scope["scope"];
             });
+            $institution = $user->institution;
+            $user["institution"] = $institution;
             $user["scopes"] = $scopes;
-            unset($user->role);
             $token = $user->createToken('token')->plainTextToken;
 
             return response()->json(["status" => "success", "login" => true, "token" => $token, "data" => $user]);
