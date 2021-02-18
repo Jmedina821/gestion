@@ -21,8 +21,11 @@ class DatabaseSeeder extends Seeder
             ProjectStatusSeeder::class,
             MunicipioSeeder::class,
             MeasurementSeeder::class,
-            UserSeeder::class,
+            ModuleSeeder::class,
+            ScopeSeeder::class,
+            RoleSeeder::class,
             InvestmentSubAreaSeeder::class
         ]);
+        $this->call(UserSeeder::class);
     }
 }

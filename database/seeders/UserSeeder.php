@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\Institution;
 use App\Models\User;
+use App\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -20,12 +21,14 @@ class UserSeeder extends Seeder
     {
     	
          $institution_id = Institution::first()->id;
+         $role_id = Role::first()->id;
         User::create([
             'name' => "admin",
             'email' => "admin@admin.com",
             'phone' => "123456789",
             'password' => Hash::make("123456"),
-            'institution_id' => $institution_id
+            'institution_id' => $institution_id,
+            'role_id' => $role_id 
         ]);
     }
 }

@@ -14,6 +14,6 @@ class Module extends Model
 
     public function scopes()
     {
-        return $this->hasMany('scopes');
+        return $this->hasMany('App\Models\Scope');
     }
 }

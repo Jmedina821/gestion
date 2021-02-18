@@ -30,6 +30,6 @@ class CreateScopesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('scope');
+        Schema::dropIfExists('scopes');
     }
 }

@@ -10,7 +10,7 @@ class Scope extends Model
 {
     use HasFactory, Uuid;
 
-    protected $fillable = ["name", "module_id"];
+    protected $fillable = ["name", "scope", "module_id"];
 
     public function module() {
         return $this->belongsTo(Module::class);

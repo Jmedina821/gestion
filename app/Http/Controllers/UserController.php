@@ -19,7 +19,8 @@ class UserController extends Controller
             "email" => "required|email",
             "phone" => "required",
             "password" => "required",
-            "institution_id" => "required"
+            "institution_id" => "required",
+            "role_id" => "required"
         ]);
 
         if ($validator->fails()) {
@@ -60,6 +61,11 @@ class UserController extends Controller
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
+            $scopes = $user->role->scopes->map( function ($scope){
+                return $scope["scope"];
+            });
+            $user["scopes"] = $scopes;
+            unset($user->role);
             $token = $user->createToken('token')->plainTextToken;
 
             return response()->json(["status" => "success", "login" => true, "token" => $token, "data" => $user]);
