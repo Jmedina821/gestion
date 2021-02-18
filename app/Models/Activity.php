@@ -23,7 +23,8 @@ class Activity extends Model
         "estimated_population",
         "benefited_population",
         "lat",
-        "lng"
+        "lng",
+        "budget_cost"
     ];
 
     protected $casts = ["gobernador" => 'boolean'];
