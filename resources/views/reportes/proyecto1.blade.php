@@ -123,7 +123,7 @@
     </td>
     </tr>
   </table>
-    @foreach($images as $image)
+    @foreach($images ?? [] as $image)
       <img class="image" src="{{storage_path('app/'.$image)}}" width="250">
     @endforeach
     <br/>
