@@ -18,6 +18,15 @@ class ModuleController extends Controller
         $this->moduleService = new ModuleService;
     }
 
+    public function index(Request $request)
+    {
+        $modules = Module::all();
+        if(isset($request->withScopes)) {
+            $modules = Module::with('scopes')->get();
+        }
+        return $modules;
+    }
+
     public function model()
     {
         return Module::class;

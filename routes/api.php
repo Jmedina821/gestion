@@ -35,7 +35,10 @@ Route::resource('program', ProgramController::class);
 Route::get('project/ppareport/{id}', [ProjectController::class, 'generalReport']);
 Route::resource('project', ProjectController::class);
 Route::resource('project-status', ProjectStatusController::class);
+
 Route::resource('role', RoleController::class);
+Route::patch('role/toggle-scope', 'App\Http\Controllers\RoleController@toggleScope');
+
 Route::resource('scope', ScopeController::class);
 Route::resource('sector', SectorController::class);
 Route::resource('investment-sub-area', InvestmentSubAreaController::class);

@@ -24,7 +24,8 @@ class ScopeController extends Controller
     {
         return [
             'name' => 'required',
-            'module_id' => 'required'
+            'module_id' => 'required',
+            'scope' => 'required'
         ];
     }
 }
