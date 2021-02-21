@@ -14,7 +14,6 @@ class CreateRoleScopeTable extends Migration
     public function up()
     {
         Schema::create('role_scope', function (Blueprint $table) {
-            $table->id();
             $table->uuid('role_id');
             $table->foreign('role_id')->references('id')->on('roles')
                 ->onDelete('cascade');

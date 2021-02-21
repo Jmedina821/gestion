@@ -6,6 +6,7 @@ use App\Http\Services\ProjectService;
 use App\Http\Services\ReportService;
 use App\Http\Traits\ApiCrud;
 use App\Models\Project;
+use App\Models\Budget;
 use Barryvdh\Snappy\Facades\SnappyPdf;
 use Illuminate\Http\Request;
 
@@ -61,4 +62,12 @@ class ProjectController extends Controller
         ->setPaper('a4')->setOrientation('landscape')->inline('reporte.pdf');
     }
 
+    public function availableBudget($id)
+    {
+        $budgets = Budget::where('project_id','=',$id)->get();
+
+        $total_budget = $budgets->sum('value');
+        
+        return $total_budget;
+    }
 }

@@ -33,11 +33,12 @@ Route::resource('parroquia', ParroquiaController::class);
 Route::resource('program', ProgramController::class);
 
 Route::get('project/ppareport/{id}', [ProjectController::class, 'generalReport']);
+Route::get('project/available-budget/{id}', [ProjectController::class,'availableBudget']);
 Route::resource('project', ProjectController::class);
 Route::resource('project-status', ProjectStatusController::class);
 
+Route::patch('role/toggle-scope', [RoleController::class, 'toggleScope']);
 Route::resource('role', RoleController::class);
-Route::patch('role/toggle-scope', 'App\Http\Controllers\RoleController@toggleScope');
 
 Route::resource('scope', ScopeController::class);
 Route::resource('sector', SectorController::class);
