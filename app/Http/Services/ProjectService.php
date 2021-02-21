@@ -4,6 +4,8 @@ namespace App\Http\Services;
 
 use App\Models\Institution;
 use App\Models\Project;
+use App\Models\Budget;
+use App\Models\Activity;
 use Illuminate\Support\Facades\DB;
 
 class ProjectService
@@ -59,5 +61,21 @@ class ProjectService
         }
 
         return $projects->get();
+    }
+
+    public function availableBudget($id)
+    {
+        $budgets = Budget::where('project_id','=',$id)->get();
+
+        $total_budget = $budgets->sum('value');
+
+        $activities_cost = Activity::where('project_id','=',$id)->get();
+
+        $activities_total_cost = $activities_cost->sum('budget_cost');
+
+        $available_budget = $total_budget - $activities_total_cost;
+
+        return $available_budget;
+        
     }
 }

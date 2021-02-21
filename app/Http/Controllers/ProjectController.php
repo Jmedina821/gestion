@@ -65,17 +65,7 @@ class ProjectController extends Controller
 
     public function availableBudget($id)
     {
-        $budgets = Budget::where('project_id','=',$id)->get();
-
-        $total_budget = $budgets->sum('value');
-
-        $activities_cost = Activity::where('project_id','=',$id)->get();
-
-        $activities_total_cost = $activities_cost->sum('budget_cost');
-
-        $available_budget = $total_budget - $activities_total_cost;
-
-        return $available_budget;
+        return $this->projectService->availableBudget($id);
         
     }
 }
