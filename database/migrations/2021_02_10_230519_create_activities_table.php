@@ -30,7 +30,7 @@ class CreateActivitiesTable extends Migration
             $table->integer('benefited_population');
             $table->string('lat')->nullable();
             $table->string('lng')->nullable();
-            $table->integer('budget_cost');
+            $table->decimal('budget_cost',14,2);
             $table->timestamps();
         });
     }
