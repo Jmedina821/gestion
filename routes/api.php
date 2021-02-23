@@ -34,6 +34,7 @@ Route::resource('program', ProgramController::class);
 
 Route::get('project/ppareport/{id}', [ProjectController::class, 'generalReport']);
 Route::get('project/available-budget/{id}', [ProjectController::class,'availableBudget']);
+Route::patch('project/update-status', [ProjectController::class,'updateStatus']);
 Route::resource('project', ProjectController::class);
 Route::resource('project-status', ProjectStatusController::class);
 

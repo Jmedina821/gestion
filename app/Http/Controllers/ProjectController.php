@@ -34,6 +34,11 @@ class ProjectController extends Controller
         );
     }
 
+    public function updateStatus(Request $request)
+    {
+        return $this->projectService->updateProjectStatus($request->project_id,$request->project_status_id);
+    }
+
     public function store(Request $request)
     {
         return $this->projectService->store($request->all());

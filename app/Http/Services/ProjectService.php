@@ -22,6 +22,17 @@ class ProjectService
         return $project;
     }
 
+    public function updateProjectStatus(
+        string $project_id,
+        string $project_status_id = null
+    ){
+        $project = Project::Where('id','=',$project_id);
+        $project->update([
+            "project_status_id" => $project_status_id
+        ]);
+        return $project->get();
+    }
+
     public function index(
         string $program_id = null,
         string $institution_id = null,
