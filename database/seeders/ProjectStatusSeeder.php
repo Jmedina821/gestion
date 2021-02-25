@@ -16,11 +16,12 @@ class ProjectStatusSeeder extends Seeder
     {
 
         $status = [
-            ["name" => "CULMINADO"],
-            ["name" => "INAUGURADA"],
+            ["name" => "EN CURSO"],
             ["name" => "EN EJECUCION"],
-            ["name" => "PARALIZADA"],
-            ["name" => "CULMINADA INCONCLUSA"]
+            ["name" => "CULMINADO"],
+            ["name" => "INAUGURADO"],
+            ["name" => "PARALIZADO"],
+            ["name" => "CULMINADO INCONCLUSO"]
         ];
 
         foreach ($status as $st) {

@@ -22,7 +22,7 @@ class InvestmentAreaSeeder extends Seeder
             ["name" => "CULTURA"],
             ["name" => "DEPORTE"],
             ["name" => "TECNOLOGIA"],
-            ["name" => "COMUNICACIÓN"],
+            ["name" => "COMUNICACION"],
             ["name" => "SEGURIDAD"],
             ["name" => "SERVICIOS PUBLICOS"],
             ["name" => "POLITICO"],
