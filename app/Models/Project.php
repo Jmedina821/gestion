@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Http\Traits\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class Project extends Model
 {
@@ -47,9 +48,9 @@ class Project extends Model
         return  $this->belongsToMany(InvestmentSubArea::class);
     }
 
-    public function measurement()
+    public function measurement_unit()
     {
-        return  $this->belongsTo(Measurement::class);
+        return  $this->belongsToMany(Measurement::class, 'project_measurement_unit','project_id','measurement_unit_id')->withPivot('measurement_value');
     }
 
     public function project_status()
@@ -59,5 +60,10 @@ class Project extends Model
     public function budgets()
     {
         return $this->hasMany(Budget::class);
+    }
+
+    public function modified_culmination_dates()
+    {
+        return $this->hasMany(ModifiedCulminationDate::class);
     }
 }
