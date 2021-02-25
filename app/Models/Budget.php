@@ -14,6 +14,8 @@ class Budget extends Model
        'value',
        'project_id',
        'budget_source_id',
+       'is_budget_increase',
+       'observation'
     ];
 
     public function project() {

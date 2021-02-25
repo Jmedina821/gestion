@@ -18,6 +18,8 @@ class CreateBudgetsTable extends Migration
             $table->decimal('value', 14, 2);
             $table->uuid('project_id');
             $table->foreign('project_id')->references('id')->on('projects');
+            $table->boolean('is_budget_increase')->default(false);
+            $table->string('observation')->nullable();
             $table->uuid('budget_source_id');
             $table->foreign('budget_source_id')->references('id')->on('budget_sources');
             $table->timestamps();
