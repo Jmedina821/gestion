@@ -15,6 +15,7 @@ class ProjectService
         DB::beginTransaction();
         $investment_sub_areas = $projectData["investment_sub_areas"];
         $budgets = $projectData["budgets"];
+        $measurement = $projectData["measurement_units"];
         $project = Project::create($projectData);
         $project->investmentSubAreas()->attach($investment_sub_areas);
         $project->budgets()->createMany($budgets);
