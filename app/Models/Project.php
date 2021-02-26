@@ -15,9 +15,7 @@ class Project extends Model
         'name',
         'description',
         'program_id',
-        'measurement_id',
         'project_status_id',
-        'measurement_value',
         'is_planified',
         'init_date',
         'end_date',
@@ -50,7 +48,7 @@ class Project extends Model
 
     public function measurement_unit()
     {
-        return  $this->belongsToMany(Measurement::class, 'project_measurement_unit','project_id','measurement_unit_id')->withPivot('measurement_value');
+        return  $this->belongsToMany(MeasurementUnit::class, 'project_measurement_units');
     }
 
     public function project_status()

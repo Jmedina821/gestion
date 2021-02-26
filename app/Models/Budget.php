@@ -14,9 +14,10 @@ class Budget extends Model
        'value',
        'project_id',
        'budget_source_id',
-       'is_budget_increase',
-       'observation'
+       'is_budget_increase'
     ];
+
+    protected $casts = ["is_budget_increase" => "boolean"];
 
     public function project() {
         return $this->belongsTo(Project::class);
@@ -24,6 +25,11 @@ class Budget extends Model
 
     public function budgetSource() {
         return $this->belongsTo(BudgetSource::class);
+    }
+
+    public function observation()
+    {
+        return $this->morphTo(Observation::class,'observations');
     }
 
 }

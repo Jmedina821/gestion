@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Measurement;
+use App\Models\MeasurementUnit;
 use Illuminate\Database\Seeder;
 
-class MeasurementSeeder extends Seeder
+class MeasurementUnitSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -27,7 +27,7 @@ class MeasurementSeeder extends Seeder
 
         ];
         foreach ($measurements as $measurement) {
-            Measurement::create($measurement);
+            MeasurementUnit::create($measurement);
         }
     }
 }

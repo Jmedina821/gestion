@@ -11,11 +11,15 @@ class ModifiedCulminationDate extends Model
 
     protected $fillable = [
         'modified_date',
-        'observation'
     ];
 
     public function project()
     {
         return $this->belongsTo(Project::class);
+    }
+
+    public function observation()
+    {
+        return $this->morphTo(Observation::class,'observationable');
     }
 }

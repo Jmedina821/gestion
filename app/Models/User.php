@@ -59,4 +59,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Models\Role');
     }
+
+    public function timelines()
+    {
+        return $this->hasMany(Timeline::class);
+    } 
 }

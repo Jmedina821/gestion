@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMeasurementsTable extends Migration
+class CreateUpdateTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateMeasurementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('measurements', function (Blueprint $table) {
+        Schema::create('update_types', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name')->unique();
-            $table->string('short_name')->unique();
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateMeasurementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('measurement');
+        Schema::dropIfExists('update_types');
     }
 }

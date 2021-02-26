@@ -6,7 +6,7 @@ use App\Http\Traits\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Measurement extends Model
+class MeasurementUnit extends Model
 {
     use HasFactory, Uuid;
 
@@ -14,6 +14,6 @@ class Measurement extends Model
 
     public function projects()
     {
-        return $this->belongsToMany(Project::class,'project_measurement_unit','project_id','measurement_unit_id')->withPivot('purpose_goal','reached_goal','is_goal_increase');
+        return $this->belongsToMany(Project::class,'project_measurement_units');
     }
 }

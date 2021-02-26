@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             InvestmentAreaSeeder::class,
             ProjectStatusSeeder::class,
             MunicipioSeeder::class,
-            MeasurementSeeder::class,
+            MeasurementUnitSeeder::class,
             ModuleSeeder::class,
             ScopeSeeder::class,
             RoleSeeder::class,

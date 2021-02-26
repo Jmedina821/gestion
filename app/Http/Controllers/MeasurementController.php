@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Services\MeasurementService;
 use App\Http\Traits\ApiCrud;
-use App\Models\Measurement;
+use App\Models\MeasurementUnit;
 use Illuminate\Http\Request;
 
 class MeasurementController extends Controller
@@ -18,7 +18,7 @@ class MeasurementController extends Controller
     }
     public function model()
     {
-        return Measurement::class;
+        return MeasurementUnit::class;
     }
     public function validationRules($resource_id = 0)
     {

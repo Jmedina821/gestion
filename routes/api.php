@@ -26,7 +26,7 @@ Route::resource('activity', ActivityController::class);
 Route::resource('budget', BudgetController::class);
 Route::resource('budget-source', BudgetSourceController::class);
 Route::resource('investment-area', InvestmentAreaController::class);
-Route::resource('measurement', MeasurementController::class);
+Route::resource('measurement-unit', MeasurementController::class);
 Route::resource('module', ModuleController::class);
 Route::resource('municipio', MunicipioController::class);
 Route::resource('parroquia', ParroquiaController::class);
