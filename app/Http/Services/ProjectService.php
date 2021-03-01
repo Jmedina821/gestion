@@ -19,6 +19,7 @@ class ProjectService
         $project = Project::create($projectData);
         $project->investmentSubAreas()->attach($investment_sub_areas);
         $project->budgets()->createMany($budgets);
+        $project->measurement_unit()->syncWithoutDetaching($measurement);
         DB::commit();
         return $project;
     }
@@ -41,7 +42,7 @@ class ProjectService
         string $project_status_id = null,
         bool $is_planified = null
     ) {
-        $projects = Project::with('program', 'investmentSubAreas', 'measurement', 'project_status', 'budgets.budgetSource');
+        $projects = Project::with('program', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource');
 
         if (isset($program_id)) {
             $projects = $projects->where('program_id', $program_id);

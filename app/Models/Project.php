@@ -48,7 +48,7 @@ class Project extends Model
 
     public function measurement_unit()
     {
-        return  $this->belongsToMany(MeasurementUnit::class, 'project_measurement_units');
+        return  $this->belongsToMany(MeasurementUnit::class, 'project_measurement_units')->withPivot('proposed_goal','reached_goal','is_goal_increase','observation');
     }
 
     public function project_status()

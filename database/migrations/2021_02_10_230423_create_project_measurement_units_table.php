@@ -14,7 +14,6 @@ class CreateProjectMeasurementUnitsTable extends Migration
     public function up()
     {
         Schema::create('project_measurement_units', function (Blueprint $table) {
-            $table->uuid('id')->primary();
             $table->uuid('project_id');
             $table->foreign('project_id')->references('id')->on('projects');
             $table->uuid('measurement_unit_id');
