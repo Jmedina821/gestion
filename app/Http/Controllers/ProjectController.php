@@ -73,4 +73,9 @@ class ProjectController extends Controller
         return $this->projectService->availableBudget($id);
         
     }
+
+    public function increaseBudget(Request $request)
+    {
+        return $this->projectService->increaseBudget($request->all());
+    }
 }
