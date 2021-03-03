@@ -29,7 +29,7 @@ class Budget extends Model
 
     public function observation()
     {
-        return $this->morphTo(Observation::class,'observations');
+        return $this->morphOne(Observation::class, 'observations');
     }
 
 }

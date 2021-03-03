@@ -42,17 +42,19 @@ class ProjectService
         $budget_source_id = $increase_budget_data["budget_source_id"];
         $observation = $increase_budget_data["observation"];
 
-        $project = Project::where('id','=',$project_id)->with('program','investmentSubAreas','measurement_unit', 'project_status','budgets.budgetSource');
+        DB::beginTransaction();
+        $project = Project::where('id','=',$project_id);
 
         $project->budgets()->create([
             "value" => $value,
             "budget_source_id" => $budget_source_id,
             "is_budget_increase" => True,
-        ])->observation()->create([
-            "description" => $observation
         ]);
 
-        return $project->get();
+        $project->budget->observation()->create(["observation" => $observation]);
+        DB::commit();
+        
+        return $project->with('program','investmentSubAreas','measurement_unit', 'project_status','budgets.budgetSource')->get();
     }
 
     public function index(
