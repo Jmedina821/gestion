@@ -10,7 +10,7 @@ class Observation extends Model
     use HasFactory;
 
     protected $fillable = [
-        'description'
+        "description"
     ];
 
     public function observationable()
