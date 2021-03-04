@@ -6,6 +6,7 @@ use App\Models\Institution;
 use App\Models\Project;
 use App\Models\Budget;
 use App\Models\Activity;
+use App\Models\Observation;
 use Illuminate\Support\Facades\DB;
 
 class ProjectService
@@ -28,7 +29,11 @@ class ProjectService
         string $project_id,
         string $project_status_id = null
     ){
-        $project = Project::where('id','=',$project_id)->with('program', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource');
+        $project = Project::where('id','=',$project_id)->with('program',
+         'investmentSubAreas',
+         'measurement_unit',
+         'project_status',
+         'budgets.budgetSource');
         $project->update([
             "project_status_id" => $project_status_id,
         ]);
@@ -40,21 +45,26 @@ class ProjectService
         $project_id = $increase_budget_data["project_id"];
         $value =  $increase_budget_data["value"];
         $budget_source_id = $increase_budget_data["budget_source_id"];
-        $observation = $increase_budget_data["observation"];
+        $description = $increase_budget_data["observation"];
 
         DB::beginTransaction();
-        $project = Project::where('id','=',$project_id);
 
-        $project->budgets()->create([
+        $budget = Budget::create([
+            "project_id" => $project_id,
             "value" => $value,
             "budget_source_id" => $budget_source_id,
             "is_budget_increase" => True,
         ]);
 
-        $project->budget->observation()->create(["observation" => $observation]);
+        /* $observation = new Observation([ 'description' => $description ]);
+
+        $budget->observation()->save($observation); */
+
         DB::commit();
         
-        return $project->with('program','investmentSubAreas','measurement_unit', 'project_status','budgets.budgetSource')->get();
+        $project = Project::where('id','=',$project_id)->with('program','investmentSubAreas','measurement_unit', 'project_status','budgets.budgetSource')->get()->first();
+
+        return $project;
     }
 
     public function index(
