@@ -22,6 +22,7 @@ class CreateBudgetsTable extends Migration
             $table->string('observation')->nullable();
             $table->uuid('budget_source_id');
             $table->foreign('budget_source_id')->references('id')->on('budget_sources');
+            $table->decimal('dollar_value', 14, 2);
             $table->timestamps();
         });
     }

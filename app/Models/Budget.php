@@ -12,6 +12,7 @@ class Budget extends Model
 
     protected $fillable = [
        'value',
+       'dollar_value',
        'project_id',
        'budget_source_id',
        'is_budget_increase'
