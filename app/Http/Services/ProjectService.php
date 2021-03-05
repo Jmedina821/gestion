@@ -7,6 +7,9 @@ use App\Models\Project;
 use App\Models\Budget;
 use App\Models\Activity;
 use App\Models\Observation;
+use App\Models\Timeline;
+use App\Models\UpdateType;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ProjectService
@@ -42,23 +45,42 @@ class ProjectService
 
     public function increaseBudget(array $increase_budget_data){
 
+        $user = Auth::user();
+
         $project_id = $increase_budget_data["project_id"];
         $value =  $increase_budget_data["value"];
+        $dollar_value = $increase_budget_data["dollar_value"];
         $budget_source_id = $increase_budget_data["budget_source_id"];
         $description = $increase_budget_data["observation"];
 
         DB::beginTransaction();
 
+        $previous_budget = Budget::where('project_id','=',$project_id)->sum('value');
+
         $budget = Budget::create([
             "project_id" => $project_id,
             "value" => $value,
+            "dollar_value" => $dollar_value,
             "budget_source_id" => $budget_source_id,
             "is_budget_increase" => True,
         ]);
 
-        /* $observation = new Observation([ 'description' => $description ]);
+        $updated_budget = Budget::where('project_id','=',$project_id)->sum('value');
 
-        $budget->observation()->save($observation); */
+        $timeline_entry = Timeline::create([
+            "previous_value" => $previous_budget,
+            "current_value" => $updated_budget,
+            "user_id" => $user->id,
+            "update_type_id" => UpdateType::where('name','=',"Aumento de presupuesto (Proyecto)")->get('id'),
+        ]);
+
+
+/*        $observation = new Observation([ 'description' => $description ]);
+
+        $budget->observation()->save($observation);*/
+
+
+        $previous_budget = Budget::where('id','=',$project_id)->orderByDesc('created_at')->sum('value');
 
         DB::commit();
         
