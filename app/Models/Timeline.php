@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Http\Traits\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Timeline extends Model
 {
-    use HasFactory;
+    use HasFactory, Uuid;
 
     protected $fillable = [
         'previous_value',
@@ -18,7 +19,7 @@ class Timeline extends Model
 
     public function observation()
     {
-        return $this->morphTo(Observation::class,'observations');
+        return $this->morphOne(Observation::class,'observationable');
     }
 
     public function user()
@@ -29,5 +30,10 @@ class Timeline extends Model
     public function update_type()
     {
         return $this->belongsTo(UpdateType::class);
+    }
+
+    public function timelineable()
+    {
+        return $this->morphTo();
     }
 }

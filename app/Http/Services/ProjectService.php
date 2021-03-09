@@ -31,19 +31,22 @@ class ProjectService
     public function updateProjectStatus(
         string $project_id,
         string $project_status_id = null
-    ){
-        $project = Project::where('id','=',$project_id)->with('program',
-         'investmentSubAreas',
-         'measurement_unit',
-         'project_status',
-         'budgets.budgetSource');
+    ) {
+        $project = Project::where('id', '=', $project_id)->with(
+            'program',
+            'investmentSubAreas',
+            'measurement_unit',
+            'project_status',
+            'budgets.budgetSource'
+        );
         $project->update([
             "project_status_id" => $project_status_id,
         ]);
         return $project->get()->first();
     }
 
-    public function increaseBudget(array $increase_budget_data){
+    public function increaseBudget(array $increase_budget_data)
+    {
 
         $user = Auth::user();
 
@@ -53,9 +56,10 @@ class ProjectService
         $budget_source_id = $increase_budget_data["budget_source_id"];
         $description = $increase_budget_data["observation"];
 
+
         DB::beginTransaction();
 
-        $previous_budget = Budget::where('project_id','=',$project_id)->sum('value');
+        $previous_budget = Budget::where('project_id', '=', $project_id)->sum('value');
 
         $budget = Budget::create([
             "project_id" => $project_id,
@@ -65,26 +69,22 @@ class ProjectService
             "is_budget_increase" => True,
         ]);
 
-        $updated_budget = Budget::where('project_id','=',$project_id)->sum('value');
+        $updated_budget = Budget::where('project_id', '=', $project_id)->sum('value');
 
-        $timeline_entry = Timeline::create([
+        $observation = new Observation(['description' => $description]);
+
+        $budget->observation()->save($observation);
+
+        DB::commit();
+
+        $project = Project::where('id', '=', $project_id)->with('program', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource')->get()->first();
+
+        $project->timeline()->create([
             "previous_value" => $previous_budget,
             "current_value" => $updated_budget,
             "user_id" => $user->id,
-            "update_type_id" => UpdateType::where('name','=',"Aumento de presupuesto (Proyecto)")->get('id'),
-        ]);
-
-
-/*        $observation = new Observation([ 'description' => $description ]);
-
-        $budget->observation()->save($observation);*/
-
-
-        $previous_budget = Budget::where('id','=',$project_id)->orderByDesc('created_at')->sum('value');
-
-        DB::commit();
-        
-        $project = Project::where('id','=',$project_id)->with('program','investmentSubAreas','measurement_unit', 'project_status','budgets.budgetSource')->get()->first();
+            "update_type_id" => UpdateType::where('name', '=', 'Aumento de presupuesto (Proyecto)')->get()->first()->id,
+        ])->observation()->create(['description' => $description]);
 
         return $project;
     }
@@ -96,7 +96,7 @@ class ProjectService
         string $project_status_id = null,
         bool $is_planified = null
     ) {
-        $projects = Project::with('program', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource');
+        $projects = Project::with('program', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource', 'budgets.observation', 'timeline.observation');
 
         if (isset($program_id)) {
             $projects = $projects->where('program_id', $program_id);
@@ -132,17 +132,16 @@ class ProjectService
 
     public function availableBudget($id)
     {
-        $budgets = Budget::where('project_id','=',$id)->get();
+        $budgets = Budget::where('project_id', '=', $id)->get();
 
         $total_budget = $budgets->sum('value');
 
-        $activities_cost = Activity::where('project_id','=',$id)->get();
+        $activities_cost = Activity::where('project_id', '=', $id)->get();
 
         $activities_total_cost = $activities_cost->sum('budget_cost');
 
         $available_budget = $total_budget - $activities_total_cost;
 
         return $available_budget;
-        
     }
 }

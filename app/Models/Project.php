@@ -64,4 +64,9 @@ class Project extends Model
     {
         return $this->hasMany(ModifiedCulminationDate::class);
     }
+
+    public function timeline()
+    {
+        return $this->morphMany(Timeline::class, 'timelineable');
+    }
 }

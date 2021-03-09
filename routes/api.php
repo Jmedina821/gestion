@@ -19,7 +19,11 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\InvestmentSubAreaController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('institutions-filtered', [InstitutionController::class, 'filtered']);
+
+Route::post("login", [UserController::class, "login"]);
+
+Route::middleware(["auth:sanctum"])->group(function () {
+    Route::get('institutions-filtered', [InstitutionController::class, 'filtered']);
 
 Route::resource('institution', InstitutionController::class);
 Route::resource('activity', ActivityController::class);
@@ -46,5 +50,5 @@ Route::resource('scope', ScopeController::class);
 Route::resource('sector', SectorController::class);
 Route::resource('investment-sub-area', InvestmentSubAreaController::class);
 
-Route::post("login", [UserController::class, "login"]);
 Route::post("user", [UserController::class, "register"]);
+});

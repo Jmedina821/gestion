@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
             ModuleSeeder::class,
             ScopeSeeder::class,
             RoleSeeder::class,
-            InvestmentSubAreaSeeder::class
+            InvestmentSubAreaSeeder::class,
+            UpdateTypeSeeder::class
         ]);
         $this->call(UserSeeder::class);
     }
