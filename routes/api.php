@@ -40,6 +40,8 @@ Route::get('project/ppareport/{id}', [ProjectController::class, 'generalReport']
 Route::get('project/available-budget/{id}', [ProjectController::class,'availableBudget']);
 Route::patch('project/update-status', [ProjectController::class,'updateStatus']);
 Route::post('project/budget-increase', [ProjectController::class,'increaseBudget']);
+Route::post('project/goals-increase', [ProjectController::class,'increaseGoals']);
+Route::post('project/modify-culmination-date', [ProjectController::class,'modifyCulminationDate']);
 Route::resource('project', ProjectController::class);
 Route::resource('project-status', ProjectStatusController::class);
 

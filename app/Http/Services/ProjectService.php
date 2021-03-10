@@ -45,6 +45,47 @@ class ProjectService
         return $project->get()->first();
     }
 
+    public function modifyCulminationDate(
+        array $modify_culmination_data
+    ){
+        $project_id = $modify_culmination_data["project_id"];
+        $new_date = $modify_culmination_data["modified_culmination_date"];
+        $description = $modify_culmination_data["observation"];
+
+        $project = Project::where('id', '=', $project_id)->get()->first();
+
+        DB::begintransaction();
+
+        $observation = new Observation(['description' => $description]);
+
+        $project->modified_culmination_dates()->create([
+            'modified_date' => $new_date,
+        ])->observation->save($observation);
+
+        DB::commit();
+
+        $project = Project::where('id', '=', $project_id)->with('program', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource','modified_culmination_date')->get()->first();
+            
+        return $project;
+    }
+
+    public function increaseGoals(
+        array $increase_goals_data
+    ) {
+        $project_id = $increase_goals_data["project_id"];
+        $measurement = $increase_goals_data["measurement"];
+
+        DB::beginTransaction();
+        $project = Project::where('id', '=', $project_id)->get()->first();
+        $project->measurement_unit()->syncWithoutDetaching($measurement);
+
+        DB::commit();
+
+        $project = Project::where('id', '=', $project_id)->with('program', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource','modified_culmination_date')->get()->first();
+
+        return $project;
+    }
+
     public function increaseBudget(array $increase_budget_data)
     {
 
@@ -77,7 +118,7 @@ class ProjectService
 
         DB::commit();
 
-        $project = Project::where('id', '=', $project_id)->with('program', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource')->get()->first();
+        $project = Project::where('id', '=', $project_id)->with('program', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource','modified_culmination_date')->get()->first();
 
         $project->timeline()->create([
             "previous_value" => $previous_budget,

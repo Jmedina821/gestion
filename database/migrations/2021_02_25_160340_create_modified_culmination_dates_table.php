@@ -16,6 +16,8 @@ class CreateModifiedCulminationDatesTable extends Migration
         Schema::create('modified_culmination_dates', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('observation');
+            $table->uuid('project_id');
+            $table->foreign('project_id')->references('id')->on('projects');
             $table->date('modified_date');
             $table->timestamps();
         });

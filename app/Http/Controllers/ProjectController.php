@@ -78,4 +78,14 @@ class ProjectController extends Controller
     {
         return $this->projectService->increaseBudget($request->all());
     }
+
+    public function increaseGoals(Request $request)
+    {
+        return $this->projectService->increaseGoals($request->all());
+    }
+
+    public function modifyCulminationDate(Request $request)
+    {
+        return $this->projectService->modifyCulminationDate($request->all());
+    }
 }
