@@ -11,7 +11,8 @@ class UpdateType extends Model
     use HasFactory,Uuid;
 
     protected $fillable = [
-        'name'
+        'name',
+        'code_name'
     ];
 
     public function Timelines()
