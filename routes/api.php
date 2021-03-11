@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::post("login", [UserController::class, "login"]);
+Route::get('image/{id}', 'App\Http\Controllers\ImageController@retrieveImage');
+
 
 Route::middleware(["auth:sanctum"])->group(function () {
     Route::get('institutions-filtered', [InstitutionController::class, 'filtered']);
