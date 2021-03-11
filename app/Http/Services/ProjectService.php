@@ -72,14 +72,33 @@ class ProjectService
     public function increaseGoals(
         array $increase_goals_data
     ) {
+        $user = Auth::user();
         $project_id = $increase_goals_data["project_id"];
         $measurement = $increase_goals_data["measurement"];
+        $obseration = $increase_goals_data["observation"];
+        $updated_project = new Project();
 
         DB::beginTransaction();
+
         $project = Project::where('id', '=', $project_id)->get()->first();
         $project->measurement_unit()->syncWithoutDetaching($measurement);
 
+        foreach($measurement as $measure)
+        {
+            $updated_project = writeTimeline(
+                $project_id,
+                $user,
+                $obseration,
+                "project_goal",
+                $measure
+            );
+        }
+
+        
+
         DB::commit();
+
+
 
         $project = Project::where('id', '=', $project_id)->with('program', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource','modified_culmination_date')->get()->first();
 
@@ -95,12 +114,11 @@ class ProjectService
         $value =  $increase_budget_data["value"];
         $dollar_value = $increase_budget_data["dollar_value"];
         $budget_source_id = $increase_budget_data["budget_source_id"];
-        $description = $increase_budget_data["observation"];
+        $observation = $increase_budget_data["observation"];
 
+        $project = 
 
         DB::beginTransaction();
-
-        $previous_budget = Budget::where('project_id', '=', $project_id)->sum('value');
 
         $budget = Budget::create([
             "project_id" => $project_id,
@@ -110,24 +128,20 @@ class ProjectService
             "is_budget_increase" => True,
         ]);
 
-        $updated_budget = Budget::where('project_id', '=', $project_id)->sum('value');
-
-        $observation = new Observation(['description' => $description]);
+        $observation = new Observation(['description' => $observation]);
 
         $budget->observation()->save($observation);
 
+        $update_project = writeTimeline(
+            $project_id,
+            $user,
+            $observation,
+            "project_budget"
+        );
+
         DB::commit();
 
-        $project = Project::where('id', '=', $project_id)->with('program', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource','modified_culmination_date')->get()->first();
-
-        $project->timeline()->create([
-            "previous_value" => $previous_budget,
-            "current_value" => $updated_budget,
-            "user_id" => $user->id,
-            "update_type_id" => UpdateType::where('name', '=', 'Aumento de presupuesto (Proyecto)')->get()->first()->id,
-        ])->observation()->create(['description' => $description]);
-
-        return $project;
+        return $update_project;
     }
 
     public function index(

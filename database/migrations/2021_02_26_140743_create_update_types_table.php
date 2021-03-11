@@ -16,6 +16,7 @@ class CreateUpdateTypesTable extends Migration
         Schema::create('update_types', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
+            $table->string('code_name');
             $table->timestamps();
         });
     }

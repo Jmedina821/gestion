@@ -15,11 +15,26 @@ class UpdateTypeSeeder extends Seeder
     public function run()
     {
         $updatesTypes = [
-            ["name" => "Aumento de presupuesto (Proyecto)"],
-            ["name" => "Ampliación de metas (Proyecto)"],
-            ["name" => "Modificación fecha de culminación (Proyecto)"],
-            ["name" => "Actualización de Status"],
-            ["name" => "Modificación fecha de culminación (Actividad)"],
+            [
+                "name" => "Aumento de presupuesto (Proyecto)",
+                "code_name" => "project_budget"
+            ],
+            [
+                "name" => "Ampliación de metas (Proyecto)",
+                "code_name" => "project_goal"
+            ],
+            [
+                "name" => "Modificación fecha de culminación (Proyecto)",
+                "code_name" => "project_culmination_date"
+            ],
+            [
+                "name" => "Actualización de Status",
+                "code_name" => "project_status"
+            ],
+            [
+                "name" => "Modificación fecha de culminación (Actividad)",
+                "code_name" => "activity_culmination_date"
+            ],
         ];
 
         foreach($updatesTypes as $updateType){
