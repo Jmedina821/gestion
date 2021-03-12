@@ -30,19 +30,34 @@ class ProjectService
 
     public function updateProjectStatus(
         string $project_id,
-        string $project_status_id = null
+        string $project_status_id = null,
+        string $observation
     ) {
-        $project = Project::where('id', '=', $project_id)->with(
-            'program',
-            'investmentSubAreas',
-            'measurement_unit',
-            'project_status',
-            'budgets.budgetSource'
-        );
+
+        $user = Auth::user();
+        $observation = new Observation([ 'description' => $observation]);
+
+        DB::beginTransaction();
+        $project = Project::where('id', '=', $project_id)->with('project_status');
+        
+        $last_value = $project->get()->first()->project_status->name;
+        
         $project->update([
             "project_status_id" => $project_status_id,
         ]);
-        return $project->get()->first();
+
+        $project = writeTimeline(
+            $project_id,
+            $user,
+            $observation,
+            "project_status",
+            null,
+            $last_value
+        );
+
+        DB::commit();
+
+        return $project;
     }
 
     public function modifyCulminationDate(
@@ -64,7 +79,7 @@ class ProjectService
 
         DB::commit();
 
-        $project = Project::where('id', '=', $project_id)->with('program', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource','modified_culmination_date')->get()->first();
+        $project = Project::where('id', '=', $project_id)->with('program', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource','modified_culmination_dates')->get()->first();
             
         return $project;
     }
@@ -83,7 +98,7 @@ class ProjectService
         $project = Project::where('id', '=', $project_id)->get()->first();
         $project->measurement_unit()->syncWithoutDetaching($measurement);
 
-        foreach($measurement as $measure)
+        /* foreach($measurement as $measure)
         {
             $updated_project = writeTimeline(
                 $project_id,
@@ -92,7 +107,7 @@ class ProjectService
                 "project_goal",
                 $measure
             );
-        }
+        } */
 
         
 
@@ -100,7 +115,7 @@ class ProjectService
 
 
 
-        $project = Project::where('id', '=', $project_id)->with('program', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource','modified_culmination_date')->get()->first();
+        $project = Project::where('id', '=', $project_id)->with('program', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource','modified_culmination_dates')->get()->first();
 
         return $project;
     }
