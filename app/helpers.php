@@ -12,7 +12,7 @@ function writeTimeline(
     $user, //Usuario almacenado a partir de Auth.
     $observation, // string
     $update_code_name,
-    $updated_measurement = null,
+    $updated_measurement_id = '',
     $previous_value = ''
     ){
 
@@ -20,7 +20,14 @@ function writeTimeline(
     $update_type_id = UpdateType::where('code_name',"=",$update_code_name)->get()->first()->id;
     $project = Project::where('id', '=', $project_id)->with('measurement_unit')->get()->first(); 
 
-    if ($update_code_name === "project_goal" && isset($updated_measurement)){
+    if ($update_code_name === "project_goal" && isset($updated_measurement_id))
+    {
+        
+        $project_measurement_units = Project::where('id','=',$project_id)->with('measurement_unit')->get()->first()->measurement_unit;
+        
+        $current_measurement = $project_measurement_units->where('id','=',$updated_measurement_id)->first();
+
+        $current_value = $current_measurement->pivot->proposed_goal;
 
     } elseif ($update_code_name === "project_budget" ) 
     {
@@ -37,6 +44,10 @@ function writeTimeline(
         
         $previous_value = null;
         $current_value = "Creación de proyecto";
+    } elseif ($update_code_name === "project_culmination_date") {
+        $current_value = Project::where('id', '=', $project_id)->with('modified_culmination_dates')
+            ->whereHas('modified_culmination_dates')->get()->first()
+            ->modified_culmination_dates->orderBy('modified_date','desc')->first()->get('modified_date');
     }
 
     $project->timeline()->create([

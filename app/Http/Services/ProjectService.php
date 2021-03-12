@@ -48,13 +48,13 @@ class ProjectService
     ) {
 
         $user = Auth::user();
-        $observation = new Observation([ 'description' => $observation]);
+        $observation = new Observation(['description' => $observation]);
 
         DB::beginTransaction();
         $project = Project::where('id', '=', $project_id)->with('project_status');
-        
+
         $last_value = $project->get()->first()->project_status->name;
-        
+
         $project->update([
             "project_status_id" => $project_status_id,
         ]);
@@ -75,7 +75,8 @@ class ProjectService
 
     public function modifyCulminationDate(
         array $modify_culmination_data
-    ){
+    ) {
+        $user = Auth::user();
         $project_id = $modify_culmination_data["project_id"];
         $new_date = $modify_culmination_data["modified_culmination_date"];
         $description = $modify_culmination_data["observation"];
@@ -84,16 +85,35 @@ class ProjectService
 
         DB::begintransaction();
 
+        $previous_value = $project->end_date;
+
+        $project_to_check = Project::where('id', '=', $project_id)->with('modified_culmination_dates')->whereHas('modified_culmination_dates')->get();
+        
+        if(sizeof($project_to_check) > 0){
+            $previous_value = $project_to_check->first()->modified_culmination_dates->orderBy('modified_date','desc')->first()->get('modified_date');
+        }
+        
         $observation = new Observation(['description' => $description]);
 
         $project->modified_culmination_dates()->create([
             'modified_date' => $new_date,
         ])->observation->save($observation);
 
+        
+
+        $project = writeTimeline(
+            $project_id,
+            $user,
+            new Observation(["description" => $observation]),
+            "project_culmination_date",
+            null,
+            $previous_value
+        );
+
         DB::commit();
 
-        $project = Project::where('id', '=', $project_id)->with('program', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource','modified_culmination_dates')->get()->first();
-            
+        $project = Project::where('id', '=', $project_id)->with('program', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource', 'modified_culmination_dates')->get()->first();
+
         return $project;
     }
 
@@ -103,8 +123,7 @@ class ProjectService
         $user = Auth::user();
         $project_id = $increase_goals_data["project_id"];
         $measurement = $increase_goals_data["measurement"];
-        $obseration = $increase_goals_data["observation"];
-        $updated_project = new Project();
+        $observation = $increase_goals_data["observation"];
 
         DB::beginTransaction();
 
@@ -112,34 +131,33 @@ class ProjectService
 
         $previous_measurements = [];
 
-        foreach ($measurement as $measure_id => $value) {
+        /* foreach ($measurement as $measure_id => $value) {
             $previous_measure = Project::where('id','=',$project_id)->with('measurement_unit')->whereHas('measurement_unit', function ($query) use ($measure_id){
-                return $query->where('id','=',$measure_id)->get()->first();
-            })->pivot->proposed_goal;
-            array_push($previous_measurements,$previous_measure);
+                return $query->where('id','=',$measure_id);
+            })->get()->first();
 
-        }
+            if(isset($previous_measure)){
+                $previous_measure = $previous_measure->pivot->proposed_goal;
+                array_push($previous_measurements,$previous_measure);
+            }       
+        } */
 
         $project->measurement_unit()->syncWithoutDetaching($measurement);
 
-        foreach($measurement as $measure)
-        {
-            $updated_project = writeTimeline(
+        foreach ($measurement as $measure_id => $value) {
+            
+            writeTimeline(
                 $project_id,
                 $user,
-                $obseration,
+                new Observation(["description" => $observation]),
                 "project_goal",
-                $measure
+                $measure_id
             );
         }
 
-        
-
         DB::commit();
 
-
-
-        $project = Project::where('id', '=', $project_id)->with('program', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource','modified_culmination_dates')->get()->first();
+        $project = Project::where('id', '=', $project_id)->with('program', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource', 'modified_culmination_dates','timeline.observation')->get()->first();
 
         return $project;
     }
@@ -155,9 +173,9 @@ class ProjectService
         $budget_source_id = $increase_budget_data["budget_source_id"];
         $observation = $increase_budget_data["observation"];
 
-        $project = 
+        $project =
 
-        DB::beginTransaction();
+            DB::beginTransaction();
 
         $budget = Budget::create([
             "project_id" => $project_id,
