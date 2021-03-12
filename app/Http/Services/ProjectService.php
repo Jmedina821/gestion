@@ -6,6 +6,7 @@ use App\Models\Institution;
 use App\Models\Project;
 use App\Models\Budget;
 use App\Models\Activity;
+use App\Models\MeasurementUnit;
 use App\Models\Observation;
 use App\Models\Timeline;
 use App\Models\UpdateType;
@@ -16,6 +17,9 @@ class ProjectService
 {
     public function store(array $projectData)
     {
+        $user = Auth::user();
+        $observation = new Observation(["description" => "Creación de proyecto"]);
+
         DB::beginTransaction();
         $investment_sub_areas = $projectData["investment_sub_areas"];
         $budgets = $projectData["budgets"];
@@ -24,6 +28,15 @@ class ProjectService
         $project->investmentSubAreas()->attach($investment_sub_areas);
         $project->budgets()->createMany($budgets);
         $project->measurement_unit()->syncWithoutDetaching($measurement);
+
+        $timeline_entry = writeTimeline(
+            $project->id,
+            $user,
+            $observation,
+            "project_creation",
+            null
+        );
+
         DB::commit();
         return $project;
     }
@@ -96,9 +109,20 @@ class ProjectService
         DB::beginTransaction();
 
         $project = Project::where('id', '=', $project_id)->get()->first();
+
+        $previous_measurements = [];
+
+        foreach ($measurement as $measure_id => $value) {
+            $previous_measure = Project::where('id','=',$project_id)->with('measurement_unit')->whereHas('measurement_unit', function ($query) use ($measure_id){
+                return $query->where('id','=',$measure_id)->get()->first();
+            })->pivot->proposed_goal;
+            array_push($previous_measurements,$previous_measure);
+
+        }
+
         $project->measurement_unit()->syncWithoutDetaching($measurement);
 
-        /* foreach($measurement as $measure)
+        foreach($measurement as $measure)
         {
             $updated_project = writeTimeline(
                 $project_id,
@@ -107,7 +131,7 @@ class ProjectService
                 "project_goal",
                 $measure
             );
-        } */
+        }
 
         
 

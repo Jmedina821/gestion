@@ -15,7 +15,7 @@ class CreateTimelinesTable extends Migration
     {
         Schema::create('timelines', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('previous_value');
+            $table->string('previous_value')->nullable();
             $table->string('current_value');
             $table->uuid('user_id');
             $table->uuid('update_type_id');

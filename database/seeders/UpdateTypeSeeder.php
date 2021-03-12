@@ -34,7 +34,10 @@ class UpdateTypeSeeder extends Seeder
             [
                 "name" => "Modificación fecha de culminación (Actividad)",
                 "code_name" => "activity_culmination_date"
-            ],
+            ],[
+                "name" => "Creación del proyecto",
+                "code_name" => "project_creation"
+            ]
         ];
 
         foreach($updatesTypes as $updateType){

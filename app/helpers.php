@@ -8,8 +8,8 @@ use App\Models\UpdateType;
 use Illuminate\Support\Facades\DB;
 
 function writeTimeline(
-    $project_id, //De tipo laravel collection
-    $user, //Auth user instance
+    $project_id, 
+    $user, //Usuario almacenado a partir de Auth.
     $observation, // string
     $update_code_name,
     $updated_measurement = null,
@@ -32,7 +32,11 @@ function writeTimeline(
     } elseif ( $update_code_name === "project_status") {
 
         $current_value = Project::where('id','=',$project_id)->with('project_status')->get()->first()->project_status->name;
+
+    } elseif ( $update_code_name === "project_creation") {
         
+        $previous_value = null;
+        $current_value = "Creación de proyecto";
     }
 
     $project->timeline()->create([
