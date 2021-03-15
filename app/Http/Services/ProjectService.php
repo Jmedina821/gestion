@@ -90,7 +90,8 @@ class ProjectService
         $project_to_check = Project::where('id', '=', $project_id)->with('modified_culmination_dates')->whereHas('modified_culmination_dates')->get();
         
         if(sizeof($project_to_check) > 0){
-            $previous_value = $project_to_check->first()->modified_culmination_dates->orderBy('modified_date','desc')->first()->get('modified_date');
+            $previous_value = $project_to_check->first()->modified_culmination_dates->sortByDesc('modified_date')->first()->modified_date;
+            
         }
         
         $project->modified_culmination_dates()->create([
@@ -107,8 +108,6 @@ class ProjectService
         );
 
         DB::commit();
-
-        $project = Project::where('id', '=', $project_id)->with('program', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource', 'modified_culmination_dates')->get()->first();
 
         return $project;
     }
@@ -204,7 +203,7 @@ class ProjectService
         string $project_status_id = null,
         bool $is_planified = null
     ) {
-        $projects = Project::with('program', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource', 'budgets.observation', 'timeline.observation');
+        $projects = Project::with('program', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource', 'budgets.observation', 'timeline.observation','modified_culmination_dates');
 
         if (isset($program_id)) {
             $projects = $projects->where('program_id', $program_id);

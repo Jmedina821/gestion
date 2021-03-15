@@ -47,7 +47,7 @@ function writeTimeline(
     } elseif ($update_code_name === "project_culmination_date") {
         $current_value = Project::where('id', '=', $project_id)->with('modified_culmination_dates')
             ->whereHas('modified_culmination_dates')->get()->first()
-            ->modified_culmination_dates->orderBy('modified_date','desc')->first()->get('modified_date');
+            ->modified_culmination_dates->sortByDesc('modified_date')->first()->modified_date;
     }
 
     $project->timeline()->create([
