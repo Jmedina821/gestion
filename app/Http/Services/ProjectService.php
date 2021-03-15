@@ -93,18 +93,14 @@ class ProjectService
             $previous_value = $project_to_check->first()->modified_culmination_dates->orderBy('modified_date','desc')->first()->get('modified_date');
         }
         
-        $observation = new Observation(['description' => $description]);
-
         $project->modified_culmination_dates()->create([
             'modified_date' => $new_date,
-        ])->observation->save($observation);
-
-        
+        ])->observation()->create(['description' => $description]);
 
         $project = writeTimeline(
             $project_id,
             $user,
-            new Observation(["description" => $observation]),
+            new Observation(["description" => $description]),
             "project_culmination_date",
             null,
             $previous_value

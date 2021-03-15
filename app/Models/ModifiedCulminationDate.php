@@ -21,6 +21,6 @@ class ModifiedCulminationDate extends Model
 
     public function observation()
     {
-        return $this->morphOne(Observation::class,'observationable');
+        return $this->morphOne(Observation::class, 'observationable');
     }
 }
