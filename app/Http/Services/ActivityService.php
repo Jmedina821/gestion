@@ -82,6 +82,8 @@ class ActivityService
       ->join('parroquias as parr', 'parr.id', 'act.parroquia_id')
       ->join('municipios as mun', 'mun.id', 'parr.municipio_id')
       ->join('projects as proj', 'proj.id', 'act.project_id')
+      ->join('programs as prog', 'prog.id', 'proj.program_id')      
+      ->leftJoin('institutions as inst', 'inst.id', 'prog.institution_id')
       ->join('investment_sub_area_project as subarea_pivot', 'subarea_pivot.project_id', 'proj.id')
       ->join('investment_sub_areas as subarea', 'subarea.id', 'subarea_pivot.investment_sub_area_id')
       ->join('investment_areas as area', 'area.id', 'subarea.investment_area_id');
@@ -90,11 +92,14 @@ class ActivityService
       ->where('mun.code', '=', $municipio_code)
       ->select(
         DB::raw('COUNT(act.id) as activity_count'),
-        DB::raw('area.name as area_name'),
-        DB::raw('area.code as area_code'),
-      )->groupBy('area_name', 'area_code')
-      ->get();
+        DB::raw('inst.parent_id as parent_id'),
+      )->groupBy('parent_id')
+       ->get();
+    collect($activities)->map(function ($act) {
+      $act->parent = Institution::find($act->parent_id)->first();
+    });
     $municipio =  Municipio::where('code', $municipio_code)->first();
     return ["count" => $activities, "municipio" => $municipio];
+
   }
 }
