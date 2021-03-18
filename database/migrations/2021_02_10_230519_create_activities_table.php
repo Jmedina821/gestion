@@ -26,8 +26,8 @@ class CreateActivitiesTable extends Migration
             $table->string('address');
             $table->date('init_date');
             $table->date('end_date')->nullable();
-            $table->integer('estimated_population');
-            $table->integer('benefited_population');
+            $table->integer('estimated_population')->nullable();
+            $table->integer('benefited_population')->nullable();
             $table->string('lat')->nullable();
             $table->string('lng')->nullable();
             $table->decimal('budget_cost',14,2);

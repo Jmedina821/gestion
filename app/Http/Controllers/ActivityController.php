@@ -65,8 +65,6 @@ class ActivityController extends Controller
             "parroquia_id" => 'required',
             "address" => 'required',
             "init_date" => 'required',
-            "estimated_population" => 'required',
-            "benefited_population" => 'required',
             "images.*" => 'mimes:png,jpg,jpeg'
         ];
     }
