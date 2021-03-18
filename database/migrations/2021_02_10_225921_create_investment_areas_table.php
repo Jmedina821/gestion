@@ -16,6 +16,7 @@ class CreateInvestmentAreasTable extends Migration
         Schema::create('investment_areas', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name')->unique();
+            $table->integer('code');
             $table->timestamps();
         });
     }

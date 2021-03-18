@@ -22,6 +22,11 @@ class ActivityController extends Controller
         $this->projectService = new ProjectService;
     }
 
+    public function activityCountByMunicipio(Request $request)
+    {
+        return $this->activityService->countActivitiesByMunicipio($request->municipio_code);
+    }
+
     public function store(Request $request)
     {
         Validator::make($request->all(), $this->validationRules())->validate();

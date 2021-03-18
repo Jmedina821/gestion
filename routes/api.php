@@ -28,6 +28,8 @@ Route::middleware(["auth:sanctum"])->group(function () {
     Route::get('institutions-filtered', [InstitutionController::class, 'filtered']);
 
 Route::resource('institution', InstitutionController::class);
+
+Route::get('activity-count-by-municipio', [ActivityController::class, 'activityCountByMunicipio']);
 Route::resource('activity', ActivityController::class);
 Route::resource('budget', BudgetController::class);
 Route::resource('budget-source', BudgetSourceController::class);

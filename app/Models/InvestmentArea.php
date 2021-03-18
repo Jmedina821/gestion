@@ -10,7 +10,7 @@ class InvestmentArea extends Model
 {
     use HasFactory, Uuid;
 
-    protected $fillable = ["name"];
+    protected $fillable = ["name", "code"];
 
     public function images()
     {
@@ -19,7 +19,7 @@ class InvestmentArea extends Model
     
     public function investmentSubAreas()
     {
-        return $this->hasMany(investmentSubAreas::class);
+        return $this->hasMany(InvestmentSubArea::class);
     }
 
 }
