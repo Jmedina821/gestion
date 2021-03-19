@@ -22,13 +22,11 @@ class InstitutionSeeder extends Seeder
             ["code" => "E004" , "parent_id" => null, "name" => "SECRETARIA EJECUTIVA PARA EL SISTEMA DE PROTECCIÓN SOCIAL PARA EL PROGRESO"],
             ["code" => "E005" , "parent_id" => null, "name" => "SECRETARIA EJECUTIVA DE SALUD PUBLICA"],
             ["code" => "E006" , "parent_id" => null, "name" => "SECRETARIA EJECUTIVA PARA LA SOBERANIA, SEGURIDAD Y PAZ TERRITORIAL"],
-/*             ["code" => "E007" , "parent_id" => null, "name" => "SECRETARIA GENERAL DE GOBIERNO"], */
+            ["code" => "E007" , "parent_id" => null, "name" => "SECRETARIA GENERAL DE GOBIERNO"],
             ["code" => "E008" , "parent_id" => null, "name" => "UNIDADES DE APOYO ADSCRITAS AL DESPACHO DEL GOBERNADOR"],
-/*             ["code" => "E009" , "parent_id" => null, "name" => "SECRETARIA DEL DESPACHO"],
-            ["code" => "E010" , "parent_id" => null, "name" => "SECRETARIA PRIVADA DEL GOBERNADOR"] */
+            ["code" => "E009" , "parent_id" => null, "name" => "SECRETARIA DEL DESPACHO"],
+            ["code" => "E010" , "parent_id" => null, "name" => "SECRETARIA PRIVADA DEL GOBERNADOR"]
         ];
-
-        
 
         foreach ($secretarias_e as $sec_e) {
             Institution::create($sec_e);
@@ -44,8 +42,6 @@ class InstitutionSeeder extends Seeder
         $unid_de_apoyo = Institution::where('name','=',"UNIDADES DE APOYO ADSCRITAS AL DESPACHO DEL GOBERNADOR")->first();
         $despacho = Institution::where('name','=',"SECRETARIA DEL DESPACHO")->first();
         $privada = Institution::where('name','=',"SECRETARIA PRIVADA DEL GOBERNADOR")->first();
-
-        
 
         $secretarias = [
             ["code" => "S001" , "parent_id" => $planificacion_y_finanzas->id, "name" => "SECRETARIA DE FINANZAS"],
