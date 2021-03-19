@@ -10,7 +10,7 @@ class Institution extends Model
 {
     use HasFactory, Uuid;
 
-    protected $fillable = ["name", "parent_id", "sector_id", "mision", "vision"];
+    protected $fillable = ["name", "parent_id", "sector_id", "mision", "vision", "code"];
 
     protected $appends = ["parent"];
 

@@ -91,7 +91,6 @@ class ProjectService
         
         if(sizeof($project_to_check) > 0){
             $previous_value = $project_to_check->first()->modified_culmination_dates->sortByDesc('modified_date')->first()->modified_date;
-            
         }
         
         $project->modified_culmination_dates()->create([
