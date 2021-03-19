@@ -4,6 +4,7 @@ namespace App\Http\Services;
 
 use App\Models\Activity;
 use App\Models\Institution;
+use App\Models\InvestmentArea;
 use App\Models\Municipio;
 use Illuminate\Support\Facades\DB;
 
@@ -22,7 +23,8 @@ class ActivityService
     $activities = Activity::with(
       'project.program.institution',
       'parroquia.municipio',
-      'images'
+      'images',
+      'project.investmentSubAreas.investmentArea'
     );
 
     if (isset($project_id)) {
