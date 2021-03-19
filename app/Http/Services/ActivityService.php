@@ -79,14 +79,14 @@ class ActivityService
   public function countActivitiesByMunicipio($municipio_code)
   {
     $activities = DB::table('activities as act')
-      ->join('parroquias as parr', 'parr.id', 'act.parroquia_id')
-      ->join('municipios as mun', 'mun.id', 'parr.municipio_id')
-      ->join('projects as proj', 'proj.id', 'act.project_id')
-      ->join('programs as prog', 'prog.id', 'proj.program_id')      
+      ->leftJoin('parroquias as parr', 'parr.id', 'act.parroquia_id')
+      ->leftJoin('municipios as mun', 'mun.id', 'parr.municipio_id')
+      ->leftJoin('projects as proj', 'proj.id', 'act.project_id')
+      ->leftJoin('programs as prog', 'prog.id', 'proj.program_id')      
       ->leftJoin('institutions as inst', 'inst.id', 'prog.institution_id')
-      ->join('investment_sub_area_project as subarea_pivot', 'subarea_pivot.project_id', 'proj.id')
-      ->join('investment_sub_areas as subarea', 'subarea.id', 'subarea_pivot.investment_sub_area_id')
-      ->join('investment_areas as area', 'area.id', 'subarea.investment_area_id');
+      ->leftJoin('investment_sub_area_project as subarea_pivot', 'subarea_pivot.project_id', 'proj.id')
+      ->leftJoin('investment_sub_areas as subarea', 'subarea.id', 'subarea_pivot.investment_sub_area_id')
+      ->leftJoin('investment_areas as area', 'area.id', 'subarea.investment_area_id');
 
     $activities = $activities
       ->where('mun.code', '=', $municipio_code)
@@ -96,10 +96,19 @@ class ActivityService
       )->groupBy('parent_id')
        ->get();
     collect($activities)->map(function ($act) {
-      $act->parent = Institution::find($act->parent_id)->first();
+      $act->parent = Institution::find($act->parent_id);
+    });
+    $parent_ids_lt1 = $activities->pluck('parent_id');
+    $empties = Institution::whereNotIn('id', $parent_ids_lt1)
+    ->whereNull('parent_id')
+    ->get()->map(function ($i) {
+      $i->activity_count = 0;
+      $i->parent_id = $i->id;
+      $i->parent = $i;
+      return $i;
     });
     $municipio =  Municipio::where('code', $municipio_code)->first();
-    return ["count" => $activities, "municipio" => $municipio];
+    return ["count" => array_merge($activities->toArray(), $empties->toArray()), "municipio" => $municipio];
 
   }
 }
