@@ -95,20 +95,20 @@ class InstitutionSeeder extends Seeder
             ["code" => "S045" , "parent_id" => $paz_territorial->id, "name" => "CUERPO DE BOMBEROS DEL ESTADO BOLIVARIANO DE GUARICO"],
             ["code" => "S046" , "parent_id" => $paz_territorial->id, "name" => "INSTITUTO AUTONOMO DE LA POLICIA DEL ESTADO BOLIVARIANO DE GUARICO (IAPEBG)"],
             ["code" => "S047" , "parent_id" => $paz_territorial->id, "name" => "INSTITUTO DE PREVISION SOCIAL DEL POLICIA DEL ESTADO GUARICO (IPSPEGUA)"],
-            ["code" => "S048" , "parent_id" => $paz_territorial->id, "name" => "CENTRO DE FORMACION POLICIAL DEL ESTADO BOLIVARIANO DE GUARICO (CEFOPOL)"],
+            ["code" => "S048" , "parent_id" => $paz_territorial->id, "name" => "CENTRO DE FORMACION POLICIAL DEL ESTADO BOLIVARIANO DE GUARICO (CEFOPOL)"],/* 
             ["code" => "S049" , "parent_id" => $privada->id, "name" => "RESIDENCIA OFICIAL DEL GOBERNADOR"],
-            ["code" => "S050" , "parent_id" => $privada->id, "name" => "UNIDAD AEREA"],
+            ["code" => "S050" , "parent_id" => $privada->id, "name" => "UNIDAD AEREA"], 
             ["code" => "S051" , "parent_id" => $despacho->id, "name" => "DIRECCION GENERAL"],
             ["code" => "S052" , "parent_id" => $despacho->id, "name" => "DIRECCION DE PROTOCOLO"],
-            ["code" => "S053" , "parent_id" => $despacho->id, "name" => "DIRECCION DE ADMINISTRACION"],
+            ["code" => "S053" , "parent_id" => $despacho->id, "name" => "DIRECCION DE ADMINISTRACION"],*/
             ["code" => "S054" , "parent_id" => $unid_de_apoyo->id, "name" => "DIRECCION GENERAL DE AUDITORIA INTERNA"],
             ["code" => "S055" , "parent_id" => $unid_de_apoyo->id, "name" => "DIRECCION GENERAL DE ATENCION CIUDADANA"],
             ["code" => "S056" , "parent_id" => $unid_de_apoyo->id, "name" => "DIRECCION DE CONSULTORIA JURIDICA"],
-            ["code" => "S057" , "parent_id" => $unid_de_apoyo->id, "name" => "DIRECCIÓN GENERAL DE INFORMATICA"],
+            ["code" => "S057" , "parent_id" => $unid_de_apoyo->id, "name" => "DIRECCIÓN GENERAL DE INFORMATICA"]/* 
             ["code" => "S058" , "parent_id" => $secretaria_general->id, "name" => "SECRETARIA DE GESTION TERRITORIAL"],
             ["code" => "S059" , "parent_id" => $secretaria_general->id, "name" => "DIRECCION DE ARCHIVO CENTRAL Y ACERVO HISTORICO"],
             ["code" => "S060" , "parent_id" => $secretaria_general->id, "name" => "DIRECCION GENERAL DE TRANSPORTE"],
-            ["code" => "S061" , "parent_id" => $secretaria_general->id, "name" => "COMISION DE CONTRATACIONES PUBLICAS"],
+            ["code" => "S061" , "parent_id" => $secretaria_general->id, "name" => "COMISION DE CONTRATACIONES PUBLICAS"], */
 
         ];
 
