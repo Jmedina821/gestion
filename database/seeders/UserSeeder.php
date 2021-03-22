@@ -20,14 +20,13 @@ class UserSeeder extends Seeder
     public function run()
     {
     	
-         $institution_id = Institution::first()->id;
          $role_id = Role::first()->id;
         User::create([
             'name' => "admin",
             'email' => "admin@admin.com",
             'phone' => "123456789",
             'password' => Hash::make("123456"),
-            'institution_id' => $institution_id,
+            'institution_id' => null,
             'role_id' => $role_id 
         ]);
     }
