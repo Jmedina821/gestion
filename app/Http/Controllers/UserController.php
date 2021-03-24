@@ -19,15 +19,23 @@ class UserController extends Controller
             "email" => "required|email",
             "phone" => "required",
             "password" => "required",
-            "institution_id" => "required",
+            "parent_institution" => "required",
             "role_id" => "required"
         ]);
 
         if ($validator->fails()) {
-            return response()->json(["status" => "failed", "validation_errors" => $validator->errors(),]);
+            return response()->json(["status" => "failed", "validation_errors" => $validator->errors()], 400);
         }
 
-        $inputs = $request->all();
+        $inputs = [
+            "name" => $request->name,
+            "email" => $request->email,
+            "phone" => $request->phone,
+            "password" => $request->password,
+            "institution_id" => isset($request->institution_id) ? $request->institution_id : $request->parent_institution,
+            "role_id" => $request->role_id
+        ];
+
         $inputs["password"] = Hash::make($request->password);
 
         $user   =   User::create($inputs);

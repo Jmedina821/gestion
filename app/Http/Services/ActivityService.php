@@ -100,6 +100,7 @@ class ActivityService
     collect($activities)->map(function ($act) {
       $act->parent = Institution::find($act->parent_id);
     });
+
     $parent_ids_lt1 = $activities->pluck('parent_id');
     $empties = Institution::whereNotIn('id', $parent_ids_lt1)
     ->whereNull('parent_id')
