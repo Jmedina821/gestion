@@ -27,6 +27,11 @@ class ActivityController extends Controller
         return $this->activityService->countActivitiesByMunicipio($request->municipio_code);
     }
 
+    public function countAllBySecretary($secretary_id, $municipio_id)
+    {
+        return $this->activityService->countAllBySecretary($secretary_id, $municipio_id);
+    }
+
     public function store(Request $request)
     {
         Validator::make($request->all(), $this->validationRules())->validate();

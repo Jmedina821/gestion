@@ -4,8 +4,8 @@ namespace App\Http\Services;
 
 use App\Models\Activity;
 use App\Models\Institution;
-use App\Models\InvestmentArea;
 use App\Models\Municipio;
+use App\Models\Program;
 use Illuminate\Support\Facades\DB;
 
 class ActivityService
@@ -78,13 +78,48 @@ class ActivityService
     return $activity;
   }
 
+  public function countAllBySecretary($secretary_id, $municipio_code)
+  {
+
+    $parent = Institution::where('code', $secretary_id)->get()->first();
+    $municipio_id = Municipio::where('code', $municipio_code)->get()->first()->id;
+
+    $programs = Program::with('projects', 'institution')
+      ->whereHas('institution', function($q) use ($parent) {
+        return $q->whereIn('id', $parent->children()->pluck('id'));
+      })->whereHas('projects.activities.parroquia', function($q) use ($municipio_id) {
+        return $q->where('municipio_id', $municipio_id);
+      })->get();
+      
+    $projects = array_reduce($programs->toArray(), function ($carry, $program){
+      $carry = $carry + $program["project_count"] ?? 0;
+      return $carry;
+    });
+
+    $activities = 0;
+
+    foreach ($programs as $program) {
+      $activities += array_reduce($program->projects->toArray(), function($carry, $project){
+        $carry += $project["total_activities"];
+        return $carry;
+      });
+    }
+
+    return [
+      "institution" => $parent,
+      "programs" => sizeof($programs),
+      "projects" => $projects ?? 0,
+      "activities" => $activities
+    ];
+  }
+
   public function countActivitiesByMunicipio($municipio_code)
   {
     $activities = DB::table('activities as act')
       ->leftJoin('parroquias as parr', 'parr.id', 'act.parroquia_id')
       ->leftJoin('municipios as mun', 'mun.id', 'parr.municipio_id')
       ->leftJoin('projects as proj', 'proj.id', 'act.project_id')
-      ->leftJoin('programs as prog', 'prog.id', 'proj.program_id')      
+      ->leftJoin('programs as prog', 'prog.id', 'proj.program_id')
       ->leftJoin('institutions as inst', 'inst.id', 'prog.institution_id')
       ->leftJoin('investment_sub_area_project as subarea_pivot', 'subarea_pivot.project_id', 'proj.id')
       ->leftJoin('investment_sub_areas as subarea', 'subarea.id', 'subarea_pivot.investment_sub_area_id')
@@ -96,7 +131,9 @@ class ActivityService
         DB::raw('COUNT(act.id) as activity_count'),
         DB::raw('inst.parent_id as parent_id'),
       )->groupBy('parent_id')
-       ->get();
+       ->get()
+       ->unique('act.id');
+
     collect($activities)->map(function ($act) {
       $act->parent = Institution::find($act->parent_id);
     });
@@ -104,7 +141,8 @@ class ActivityService
     $parent_ids_lt1 = $activities->pluck('parent_id');
     $empties = Institution::whereNotIn('id', $parent_ids_lt1)
     ->whereNull('parent_id')
-    ->get()->map(function ($i) {
+    ->get()
+    ->map(function ($i) {
       $i->activity_count = 0;
       $i->parent_id = $i->id;
       $i->parent = $i;
@@ -112,6 +150,5 @@ class ActivityService
     });
     $municipio =  Municipio::where('code', $municipio_code)->first();
     return ["count" => array_merge($activities->toArray(), $empties->toArray()), "municipio" => $municipio];
-
   }
 }
