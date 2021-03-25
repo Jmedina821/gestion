@@ -23,7 +23,8 @@ class ModuleSeeder extends Seeder
             ["name" => "scopes", "label" => "Permisos" ],              
             ["name" => "roles", "label" => "Roles" ],              
             ["name" => "modules", "label" => "Modulos" ],
-            ["name" => "statistics", "label" => "estadisticas" ]
+            ["name" => "statistics", "label" => "estadisticas" ],
+            ["name" => "map", "label" => "Mapa" ]
 
         ];
         foreach ($modules as $module) {
