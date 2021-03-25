@@ -25,6 +25,7 @@ class ScopeSeeder extends Seeder
             ["name" => "roles", "label" => "Roles" ],              
             ["name" => "modules", "label" => "Modulos" ],
             ["name" => "statistics", "label" => "Estadisticas" ],
+            ["name" => "map", "label" => "Mapa" ],
         ];
     
         $modules = [
