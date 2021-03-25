@@ -23,9 +23,16 @@ class RoleSeeder extends Seeder
             ->scopes()->attach([
                 Scope::where('scope','=',"programs:menu")->get()->first()->id,
                 Scope::where('scope','=',"programs:create")->get()->first()->id,
-                Scope::where('scope','=',"programs:delete")->get()->first()->id,
                 Scope::where('scope','=',"programs:update")->get()->first()->id,
-                Scope::where('scope','=',"programs:read")->get()->first()->id
+                Scope::where('scope','=',"programs:read")->get()->first()->id,
+                Scope::where('scope','=',"projects:menu")->get()->first()->id,
+                Scope::where('scope','=',"projects:create")->get()->first()->id,
+                Scope::where('scope','=',"projects:update")->get()->first()->id,
+                Scope::where('scope','=',"projects:read")->get()->first()->id,
+                Scope::where('scope','=',"activities:menu")->get()->first()->id,
+                Scope::where('scope','=',"activities:create")->get()->first()->id,
+                Scope::where('scope','=',"activities:update")->get()->first()->id,
+                Scope::where('scope','=',"activities:read")->get()->first()->id,
             ]);
     }
 }
