@@ -82,13 +82,13 @@ class ActivityService
   {
 
     $parent = Institution::where('code', $secretary_id)->get()->first();
-    $municipio_id = Municipio::where('code', $municipio_code)->get()->first()->id;
+    $municipio = Municipio::where('code', $municipio_code)->get()->first();
 
     $programs = Program::with('projects', 'institution')
       ->whereHas('institution', function($q) use ($parent) {
         return $q->whereIn('id', $parent->children()->pluck('id'));
-      })->whereHas('projects.activities.parroquia', function($q) use ($municipio_id) {
-        return $q->where('municipio_id', $municipio_id);
+      })->whereHas('projects.activities.parroquia', function($q) use ($municipio) {
+        return $q->where('municipio_id', $municipio->id);
       })->get();
       
     $projects = array_reduce($programs->toArray(), function ($carry, $program){
@@ -106,6 +106,7 @@ class ActivityService
     }
 
     return [
+      "municipio" => $municipio,
       "institution" => $parent,
       "programs" => sizeof($programs),
       "projects" => $projects ?? 0,
