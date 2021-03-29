@@ -26,6 +26,7 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         return $this->projectService->index(
+            $request->municipio_id,
             $request->program_id,
             $request->institution_id,
             $request->investment_areas,
@@ -36,7 +37,11 @@ class ProjectController extends Controller
 
     public function updateStatus(Request $request)
     {
-        return $this->projectService->updateProjectStatus($request->project_id,$request->project_status_id,$request->observation);
+        return $this->projectService->updateProjectStatus(
+            $request->project_id,
+            $request->project_status_id,
+            $request->observation
+        );
     }
 
     public function store(Request $request)

@@ -196,6 +196,7 @@ class ProjectService
     }
 
     public function index(
+        string $municipio_id = null,
         string $program_id = null,
         string $institution_id = null,
         array $investment_areas = null,
@@ -207,6 +208,12 @@ class ProjectService
         if (isset($program_id)) {
             $projects = $projects->where('program_id', $program_id);
         }
+
+        if (isset($municipio_id)) {
+            $projects = $projects->whereHas('activities.parroquia.municipio', function ($q) use ($municipio_id) {
+                $q->where('id', $municipio_id);
+            });
+        }        
 
         if (isset($institution_id)) {
             $projects = $projects->whereHas('program', function ($q) use ($institution_id) {
