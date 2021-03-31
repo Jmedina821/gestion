@@ -35,6 +35,7 @@ class ScopeSeeder extends Seeder
                 ["name" => "eliminar", "scope" => "users:delete"],
                 ["name" => "editar", "scope" => "users:update"],
                 ["name" => "ver", "scope" => "users:read"],
+                ["name" => "Ejecutivo", "scope" => "users:executive"]
             ],
             "institutions" => [
                 ["name" => "menu", "scope" => "institutions:menu"],
