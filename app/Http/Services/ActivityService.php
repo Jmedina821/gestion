@@ -61,7 +61,7 @@ class ActivityService
     return $activities->get();
   }
 
-  public function store(array $activityData, array $images)
+  public function store(array $activityData, array $images = null)
   {
     DB::beginTransaction();
     $activity = Activity::create(array_merge(
@@ -69,11 +69,14 @@ class ActivityService
       ["gobernador" => $activityData["gobernador"] == 'SI']
     ));
     $imagesToSave = [];
-    foreach ($images as $image) {
-      $storedImage = $image->store('images');
-      array_push($imagesToSave, ["path" => $storedImage]);
+    if (isset($images)) {
+      foreach ($images as $image) {
+        $storedImage = $image->store('images');
+        array_push($imagesToSave, ["path" => $storedImage]);
+      }
+      $activity->images()->createMany($imagesToSave);
     }
-    $activity->images()->createMany($imagesToSave);
+
     DB::commit();
     return $activity;
   }
@@ -85,13 +88,13 @@ class ActivityService
     $municipio = Municipio::where('code', $municipio_code)->get()->first();
 
     $programs = Program::with('projects', 'institution')
-      ->whereHas('institution', function($q) use ($parent) {
+      ->whereHas('institution', function ($q) use ($parent) {
         return $q->whereIn('id', $parent->children()->pluck('id'));
-      })->whereHas('projects.activities.parroquia', function($q) use ($municipio) {
+      })->whereHas('projects.activities.parroquia', function ($q) use ($municipio) {
         return $q->where('municipio_id', $municipio->id);
       })->get();
-      
-    $projects = array_reduce($programs->toArray(), function ($carry, $program){
+
+    $projects = array_reduce($programs->toArray(), function ($carry, $program) {
       $carry = $carry + $program["project_count"] ?? 0;
       return $carry;
     });
@@ -99,7 +102,7 @@ class ActivityService
     $activities = 0;
 
     foreach ($programs as $program) {
-      $activities += array_reduce($program->projects->toArray(), function($carry, $project){
+      $activities += array_reduce($program->projects->toArray(), function ($carry, $project) {
         $carry += $project["total_activities"];
         return $carry;
       });
@@ -132,8 +135,8 @@ class ActivityService
         DB::raw('COUNT(act.id) as activity_count'),
         DB::raw('inst.parent_id as parent_id'),
       )->groupBy('parent_id')
-       ->get()
-       ->unique('act.id');
+      ->get()
+      ->unique('act.id');
 
     collect($activities)->map(function ($act) {
       $act->parent = Institution::find($act->parent_id);
@@ -141,14 +144,14 @@ class ActivityService
 
     $parent_ids_lt1 = $activities->pluck('parent_id');
     $empties = Institution::whereNotIn('id', $parent_ids_lt1)
-    ->whereNull('parent_id')
-    ->get()
-    ->map(function ($i) {
-      $i->activity_count = 0;
-      $i->parent_id = $i->id;
-      $i->parent = $i;
-      return $i;
-    });
+      ->whereNull('parent_id')
+      ->get()
+      ->map(function ($i) {
+        $i->activity_count = 0;
+        $i->parent_id = $i->id;
+        $i->parent = $i;
+        return $i;
+      });
     $municipio =  Municipio::where('code', $municipio_code)->first();
     return ["count" => array_merge($activities->toArray(), $empties->toArray()), "municipio" => $municipio];
   }
