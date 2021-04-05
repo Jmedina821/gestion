@@ -54,7 +54,12 @@ class ActivityController extends Controller
             $request->institution_id,
             $request->municipio_id,
             $request->parroquia_id,
-            $request->gobernador
+            $request->gobernador,
+            $request->municipio_code,
+            $request->bulk_municipios,
+            $request->bulk_institution,
+            $request->dateRange,
+            $request->project_status_id
         );
     }
 

@@ -6,18 +6,23 @@ use App\Models\Activity;
 use App\Models\Institution;
 use App\Models\Municipio;
 use App\Models\Program;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class ActivityService
 {
 
   public function index(
-    string $project_id     = null,
-    string $institution_id = null,
-    string $municipio_id   = null,
-    string $parroquia_id   = null,
-    string $gobernador     = null,
-    string $municipio_code = null
+    string $project_id      = null,
+    string $institution_id  = null,
+    string $municipio_id    = null,
+    string $parroquia_id    = null,
+    string $gobernador      = null,
+    string $municipio_code  = null,
+    array $bulk_municipios  = null,
+    array $bulk_institution = null,
+    array $dateRange        = null,
+    string $project_status_id = null
   ) {
 
     $activities = Activity::with(
@@ -26,6 +31,30 @@ class ActivityService
       'images',
       'project.investmentSubAreas.investmentArea'
     );
+
+    if (isset($dateRange)) {
+      error_log(json_encode(Carbon::parse($dateRange[1])));
+      $activities = $activities->where('init_date', '>=', Carbon::parse($dateRange[0]))
+        ->where('end_date', '<=', Carbon::parse($dateRange[1]));
+    }
+
+    if (isset($project_status_id)) {
+      $activities = $activities->whereHas('project', function ($q) use ($project_status_id) {
+        $q->where('project_status_id', $project_status_id);
+      });
+    }
+
+    if (sizeof($bulk_institution) > 0) {
+      $activities = $activities->whereHas('project.program.institution', function ($q) use ($bulk_institution) {
+        $q->whereIn('parent_id', $bulk_institution);
+      });
+    }
+
+    if (sizeof($bulk_municipios) > 0) {
+      $activities = $activities->whereHas('parroquia', function ($q) use ($bulk_municipios) {
+        $q->whereIn('municipio_id', $bulk_municipios);
+      });
+    }
 
     if (isset($project_id)) {
       $activities = $activities->where('project_id', '=', $project_id);
@@ -85,13 +114,13 @@ class ActivityService
     $municipio = Municipio::where('code', $municipio_code)->get()->first();
 
     $programs = Program::with('projects', 'institution')
-      ->whereHas('institution', function($q) use ($parent) {
+      ->whereHas('institution', function ($q) use ($parent) {
         return $q->whereIn('id', $parent->children()->pluck('id'));
-      })->whereHas('projects.activities.parroquia', function($q) use ($municipio) {
+      })->whereHas('projects.activities.parroquia', function ($q) use ($municipio) {
         return $q->where('municipio_id', $municipio->id);
       })->get();
-      
-    $projects = array_reduce($programs->toArray(), function ($carry, $program){
+
+    $projects = array_reduce($programs->toArray(), function ($carry, $program) {
       $carry = $carry + $program["project_count"] ?? 0;
       return $carry;
     });
@@ -99,7 +128,7 @@ class ActivityService
     $activities = 0;
 
     foreach ($programs as $program) {
-      $activities += array_reduce($program->projects->toArray(), function($carry, $project){
+      $activities += array_reduce($program->projects->toArray(), function ($carry, $project) {
         $carry += $project["total_activities"];
         return $carry;
       });
@@ -132,8 +161,8 @@ class ActivityService
         DB::raw('COUNT(act.id) as activity_count'),
         DB::raw('inst.parent_id as parent_id'),
       )->groupBy('parent_id')
-       ->get()
-       ->unique('act.id');
+      ->get()
+      ->unique('act.id');
 
     collect($activities)->map(function ($act) {
       $act->parent = Institution::find($act->parent_id);
@@ -141,14 +170,14 @@ class ActivityService
 
     $parent_ids_lt1 = $activities->pluck('parent_id');
     $empties = Institution::whereNotIn('id', $parent_ids_lt1)
-    ->whereNull('parent_id')
-    ->get()
-    ->map(function ($i) {
-      $i->activity_count = 0;
-      $i->parent_id = $i->id;
-      $i->parent = $i;
-      return $i;
-    });
+      ->whereNull('parent_id')
+      ->get()
+      ->map(function ($i) {
+        $i->activity_count = 0;
+        $i->parent_id = $i->id;
+        $i->parent = $i;
+        return $i;
+      });
     $municipio =  Municipio::where('code', $municipio_code)->first();
     return ["count" => array_merge($activities->toArray(), $empties->toArray()), "municipio" => $municipio];
   }

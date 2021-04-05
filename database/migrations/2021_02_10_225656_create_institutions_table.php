@@ -18,6 +18,7 @@ class CreateInstitutionsTable extends Migration
             $table->mediumText('mision')->nullable();
             $table->mediumText('vision')->nullable();
             $table->string('name')->unique();
+            $table->string('short_name')->nullable();
             $table->string("code");
             $table->string('parent_id')->nullable();
             $table->uuid('sector_id')->nullable();

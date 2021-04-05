@@ -16,13 +16,13 @@ class InstitutionSeeder extends Seeder
     {
 
         $secretarias_e = [
-            ["code" => "E001" , "parent_id" => null, "name" => "SECRETARIA EJECUTIVA PARA LA PLANIFICACION Y FINANZAS DE LA GESTIÓN DE GOBIERNO"],
-            ["code" => "E002" , "parent_id" => null, "name" => "SECRETARIA EJECUTIVA PARA EL DESARROLLO ECONÓMICO PRODUCTIVO"],
-            ["code" => "E003" , "parent_id" => null, "name" => "SECRETARIA EJECUTIVA PARA EL DESARROLLO DE OBRAS Y SERVICIOS PUBLICOS"],
-            ["code" => "E004" , "parent_id" => null, "name" => "SECRETARIA EJECUTIVA PARA EL SISTEMA DE PROTECCIÓN SOCIAL PARA EL PROGRESO"],
-            ["code" => "E005" , "parent_id" => null, "name" => "SECRETARIA EJECUTIVA DE SALUD PUBLICA"],
-            ["code" => "E006" , "parent_id" => null, "name" => "SECRETARIA EJECUTIVA PARA LA SOBERANIA, SEGURIDAD Y PAZ TERRITORIAL"],
-            ["code" => "E008" , "parent_id" => null, "name" => "UNIDADES DE APOYO ADSCRITAS AL DESPACHO DEL GOBERNADOR"],
+            ["code" => "E001" , "parent_id" => null, "short_name" => "PLANIFICACION Y FINANZAS", "name" => "SECRETARIA EJECUTIVA PARA LA PLANIFICACION Y FINANZAS DE LA GESTIÓN DE GOBIERNO"],
+            ["code" => "E002" , "parent_id" => null, "short_name" => "DESARROLLO ECONÓMICO PRODUCTIVO", "name" => "SECRETARIA EJECUTIVA PARA EL DESARROLLO ECONÓMICO PRODUCTIVO"],
+            ["code" => "E003" , "parent_id" => null, "short_name" => "OBRAS Y SERVICIOS PUBLICOS", "name" => "SECRETARIA EJECUTIVA PARA EL DESARROLLO DE OBRAS Y SERVICIOS PUBLICOS"],
+            ["code" => "E004" , "parent_id" => null, "short_name" => "PROTECCIÓN SOCIAL PARA EL PROGRESO", "name" => "SECRETARIA EJECUTIVA PARA EL SISTEMA DE PROTECCIÓN SOCIAL PARA EL PROGRESO"],
+            ["code" => "E005" , "parent_id" => null, "short_name" => "SALUD PUBLICA", "name" => "SECRETARIA EJECUTIVA DE SALUD PUBLICA"],
+            ["code" => "E006" , "parent_id" => null, "short_name" => "SOBERANIA, SEGURIDAD Y PAZ TERRITORIAL", "name" => "SECRETARIA EJECUTIVA PARA LA SOBERANIA, SEGURIDAD Y PAZ TERRITORIAL"],
+            ["code" => "E008" , "parent_id" => null, "short_name" => "UNIDADES DE APOYO", "name" => "UNIDADES DE APOYO ADSCRITAS AL DESPACHO DEL GOBERNADOR"],
             /* ["code" => "E009" , "parent_id" => null, "name" => "SECRETARIA DEL DESPACHO"], */
             /* ["code" => "E010" , "parent_id" => null, "name" => "SECRETARIA PRIVADA DEL GOBERNADOR"]*/
             /* ["code" => "E007" , "parent_id" => null, "name" => "SECRETARIA GENERAL DE GOBIERNO"], */
