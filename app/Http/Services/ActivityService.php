@@ -90,7 +90,7 @@ class ActivityService
     return $activities->get();
   }
 
-  public function store(array $activityData, array $images)
+  public function store(array $activityData, array $images = null)
   {
     DB::beginTransaction();
     $activity = Activity::create(array_merge(
@@ -98,11 +98,14 @@ class ActivityService
       ["gobernador" => $activityData["gobernador"] == 'SI']
     ));
     $imagesToSave = [];
-    foreach ($images as $image) {
-      $storedImage = $image->store('images');
-      array_push($imagesToSave, ["path" => $storedImage]);
+    if (isset($images)) {
+      foreach ($images as $image) {
+        $storedImage = $image->store('images');
+        array_push($imagesToSave, ["path" => $storedImage]);
+      }
+      $activity->images()->createMany($imagesToSave);
     }
-    $activity->images()->createMany($imagesToSave);
+
     DB::commit();
     return $activity;
   }
