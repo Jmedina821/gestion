@@ -33,7 +33,6 @@ class ActivityService
     );
 
     if (isset($dateRange)) {
-      error_log(json_encode(Carbon::parse($dateRange[1])));
       $activities = $activities->where('init_date', '>=', Carbon::parse($dateRange[0]))
         ->where('end_date', '<=', Carbon::parse($dateRange[1]));
     }
