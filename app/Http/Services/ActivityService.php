@@ -44,13 +44,13 @@ class ActivityService
       });
     }
 
-    if (sizeof($bulk_institution) > 0) {
+    if (isset($bulk_institution) && sizeof($bulk_institution) > 0) {
       $activities = $activities->whereHas('project.program.institution', function ($q) use ($bulk_institution) {
         $q->whereIn('parent_id', $bulk_institution);
       });
     }
 
-    if (sizeof($bulk_municipios) > 0) {
+    if (isset($bulk_municipios) && sizeof($bulk_municipios) > 0) {
       $activities = $activities->whereHas('parroquia', function ($q) use ($bulk_municipios) {
         $q->whereIn('municipio_id', $bulk_municipios);
       });
