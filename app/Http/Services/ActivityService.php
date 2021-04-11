@@ -109,6 +109,27 @@ class ActivityService
     return $activity;
   }
 
+  public function update( string $activity_id ,array $activityData, array $images = null)
+  {
+    DB::beginTransaction();
+    $activity = Activity::find($activity_id);
+    $activity->update(array_merge(
+      $activityData,
+      ["gobernador" => $activityData["gobernador"] == 'SI']
+    ));
+    $imagesToSave = [];
+    if (isset($images)) {
+      foreach ($images as $image) {
+        $storedImage = $image->store('images');
+        array_push($imagesToSave, ["path" => $storedImage]);
+      }
+      $activity->images()->createMany($imagesToSave);
+    }
+
+    DB::commit();
+    return $activity;
+  }
+
   public function countAllBySecretary($secretary_id, $municipio_code)
   {
 

@@ -22,39 +22,42 @@ use Illuminate\Support\Facades\Route;
 
 Route::post("login", [UserController::class, "login"]);
 Route::get('image/{id}', 'App\Http\Controllers\ImageController@retrieveImage');
-Route::get('count-activities/{secretary}/{municipio}', [ActivityController::class , "countAllBySecretary"]);
+Route::get('count-activities/{secretary}/{municipio}', [ActivityController::class, "countAllBySecretary"]);
 
 Route::middleware(["auth:sanctum"])->group(function () {
-    Route::get('institutions-filtered', [InstitutionController::class, 'filtered']);
+  Route::get('institutions-filtered', [InstitutionController::class, 'filtered']);
 
-Route::resource('institution', InstitutionController::class);
+  Route::resource('institution', InstitutionController::class);
 
-Route::get('activity-count-by-municipio', [ActivityController::class, 'activityCountByMunicipio']);
-Route::resource('activity', ActivityController::class);
-Route::resource('budget', BudgetController::class);
-Route::resource('budget-source', BudgetSourceController::class);
-Route::resource('investment-area', InvestmentAreaController::class);
-Route::resource('measurement-unit', MeasurementController::class);
-Route::resource('module', ModuleController::class);
-Route::resource('municipio', MunicipioController::class);
-Route::resource('parroquia', ParroquiaController::class);
-Route::resource('program', ProgramController::class);
+  Route::get('activity-count-by-municipio', [ActivityController::class, 'activityCountByMunicipio']);
+  Route::resource('activity', ActivityController::class);
+  Route::post('activity-update/{activity_id}', [ActivityController::class, 'update']);
+  Route::resource('budget', BudgetController::class);
+  Route::resource('budget-source', BudgetSourceController::class);
+  Route::resource('investment-area', InvestmentAreaController::class);
+  Route::resource('measurement-unit', MeasurementController::class);
+  Route::resource('module', ModuleController::class);
+  Route::resource('municipio', MunicipioController::class);
+  Route::resource('parroquia', ParroquiaController::class);
+  Route::resource('program', ProgramController::class);
 
-Route::get('project/ppareport/{id}', [ProjectController::class, 'generalReport']);
-Route::get('project/available-budget/{id}', [ProjectController::class,'availableBudget']);
-Route::patch('project/update-status', [ProjectController::class,'updateStatus']);
-Route::post('project/budget-increase', [ProjectController::class,'increaseBudget']);
-Route::post('project/goals-increase', [ProjectController::class,'increaseGoals']);
-Route::post('project/modify-culmination-date', [ProjectController::class,'modifyCulminationDate']);
-Route::resource('project', ProjectController::class);
-Route::resource('project-status', ProjectStatusController::class);
+  Route::get('project/ppareport/{id}', [ProjectController::class, 'generalReport']);
+  Route::get('project/available-budget/{id}', [ProjectController::class, 'availableBudget']);
+  Route::patch('project/update-status', [ProjectController::class, 'updateStatus']);
+  Route::post('project/budget-increase', [ProjectController::class, 'increaseBudget']);
+  Route::post('project/goals-increase', [ProjectController::class, 'increaseGoals']);
+  Route::post('project/modify-culmination-date', [ProjectController::class, 'modifyCulminationDate']);
+  Route::resource('project', ProjectController::class);
+  Route::resource('project-status', ProjectStatusController::class);
 
-Route::patch('role/toggle-scope', [RoleController::class, 'toggleScope']);
-Route::resource('role', RoleController::class);
+  Route::patch('role/toggle-scope', [RoleController::class, 'toggleScope']);
+  Route::resource('role', RoleController::class);
 
-Route::resource('scope', ScopeController::class);
-Route::resource('sector', SectorController::class);
-Route::resource('investment-sub-area', InvestmentSubAreaController::class);
+  Route::resource('scope', ScopeController::class);
+  Route::resource('sector', SectorController::class);
+  Route::resource('investment-sub-area', InvestmentSubAreaController::class);
 
-Route::post("user", [UserController::class, "register"]);
+  Route::post("user", [UserController::class, "register"]);
+
+  Route::delete('image/{id}', 'App\Http\Controllers\ImageController@destroy');
 });

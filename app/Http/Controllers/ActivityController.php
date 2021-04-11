@@ -40,12 +40,29 @@ class ActivityController extends Controller
 
         $available_budget = $this->projectService->availableBudget($request->project_id);
 
-        if($available_budget < $activity_cost){
-            return response()->json(["status" => "failed" , "message" => "El costo de la actividad es mayor que el presupuesto disponible"],401);
+        if ($available_budget < $activity_cost) {
+            return response()->json(["status" => "failed", "message" => "El costo de la actividad es mayor que el presupuesto disponible"], 401);
         }
 
         return $this->activityService->store($request->all(), $request->file('images'));
     }
+
+    public function update(Request $request, $id)
+    {
+        Validator::make($request->all(), $this->validationRules())->validate();
+
+        $activity_cost = $request->budget_cost;
+
+        $available_budget = $this->projectService->availableBudget($request->project_id);
+
+        if ($available_budget < $activity_cost) {
+            return response()->json(["status" => "failed", "message" => "El costo de la actividad es mayor que el presupuesto disponible"], 401);
+        }
+
+        return $this->activityService->update($id, $request->all(), $request->file('images'));
+    }
+
+
 
     public function index(Request $request)
     {
