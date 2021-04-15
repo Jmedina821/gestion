@@ -203,7 +203,7 @@ class ProjectService
         string $project_status_id = null,
         bool $is_planified = null
     ) {
-        $projects = Project::with('program', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource', 'budgets.observation', 'timeline.observation','modified_culmination_dates');
+        $projects = Project::with('program.institution', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource', 'budgets.observation', 'timeline.observation','modified_culmination_dates');
 
         if (isset($program_id)) {
             $projects = $projects->where('program_id', $program_id);
