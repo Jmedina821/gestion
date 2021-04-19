@@ -41,6 +41,42 @@ class ProjectService
         return $project;
     }
 
+    public function update(string $project_id, array $projectData)
+    {
+        $user = Auth::user();
+        $observation = $projectData["observation"];
+        $project_to_update = Project::where('id', '=', $project_id)->firstOrFail();
+
+        DB::beginTransaction();
+
+        $investment_sub_areas = $projectData["investment_sub_areas"];
+        $budgets = $projectData["budgets"];
+        $measurement = $projectData["measurement_units"];
+
+
+        $project_to_update->investmentSubAreas()->detach();
+        $project_to_update->investmentSubAreas()->sync($investment_sub_areas);
+
+        $project_to_update->budgets()->delete();
+        $project_to_update->budgets()->createMany($budgets);
+
+
+        $project_to_update->measurement_unit()->sync($measurement);
+
+        $project_to_update = $project_to_update->update($projectData);
+
+        $timeline_entry = writeTimeline(
+            $project_id,
+            $user,
+            new Observation(['description' => $observation]),
+            "project_update",
+            null
+        );
+
+        DB::commit();
+        return $project_to_update;
+    }
+
     public function updateProjectStatus(
         string $project_id,
         string $project_status_id = null,
@@ -88,11 +124,11 @@ class ProjectService
         $previous_value = $project->end_date;
 
         $project_to_check = Project::where('id', '=', $project_id)->with('modified_culmination_dates')->whereHas('modified_culmination_dates')->get();
-        
-        if(sizeof($project_to_check) > 0){
+
+        if (sizeof($project_to_check) > 0) {
             $previous_value = $project_to_check->first()->modified_culmination_dates->sortByDesc('modified_date')->first()->modified_date;
         }
-        
+
         $project->modified_culmination_dates()->create([
             'modified_date' => $new_date,
         ])->observation()->create(['description' => $description]);
@@ -139,7 +175,7 @@ class ProjectService
         $project->measurement_unit()->syncWithoutDetaching($measurement);
 
         foreach ($measurement as $measure_id => $value) {
-            
+
             writeTimeline(
                 $project_id,
                 $user,
@@ -151,7 +187,7 @@ class ProjectService
 
         DB::commit();
 
-        $project = Project::where('id', '=', $project_id)->with('program', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource', 'modified_culmination_dates','timeline.observation')->get()->first();
+        $project = Project::where('id', '=', $project_id)->with('program', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource', 'modified_culmination_dates', 'timeline.observation')->get()->first();
 
         return $project;
     }
@@ -203,7 +239,7 @@ class ProjectService
         string $project_status_id = null,
         bool $is_planified = null
     ) {
-        $projects = Project::with('program.institution', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource', 'budgets.observation', 'timeline.observation','modified_culmination_dates');
+        $projects = Project::with('program.institution', 'investmentSubAreas', 'measurement_unit', 'project_status', 'budgets.budgetSource', 'budgets.observation', 'timeline.observation', 'modified_culmination_dates');
 
         if (isset($program_id)) {
             $projects = $projects->where('program_id', $program_id);
@@ -213,7 +249,7 @@ class ProjectService
             $projects = $projects->whereHas('activities.parroquia.municipio', function ($q) use ($municipio_id) {
                 $q->where('id', $municipio_id);
             });
-        }        
+        }
 
         if (isset($institution_id)) {
             $projects = $projects->whereHas('program', function ($q) use ($institution_id) {

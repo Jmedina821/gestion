@@ -37,6 +37,9 @@ class UpdateTypeSeeder extends Seeder
             ],[
                 "name" => "Creación del proyecto",
                 "code_name" => "project_creation"
+            ],[
+                "name" => "Actualización del proyecto",
+                "code_name" => "project_update"
             ]
         ];
 

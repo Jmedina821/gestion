@@ -48,6 +48,7 @@ Route::middleware(["auth:sanctum"])->group(function () {
   Route::post('project/goals-increase', [ProjectController::class, 'increaseGoals']);
   Route::post('project/modify-culmination-date', [ProjectController::class, 'modifyCulminationDate']);
   Route::resource('project', ProjectController::class);
+  Route::post('project-update/{project_id}', [ProjectController::class, 'update']);
   Route::resource('project-status', ProjectStatusController::class);
 
   Route::patch('role/toggle-scope', [RoleController::class, 'toggleScope']);

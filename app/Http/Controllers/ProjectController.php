@@ -49,6 +49,11 @@ class ProjectController extends Controller
         return $this->projectService->store($request->all());
     }
 
+    public function update(Request $request, $id)
+    {
+        return $this->projectService->update($id,$request->all());
+    }
+
     public function model()
     {
         return Project::class;
