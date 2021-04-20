@@ -6,6 +6,7 @@ use App\Http\Services\ProgramService;
 use App\Http\Traits\ApiCrud;
 use App\Models\Program;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProgramController extends Controller
 {
@@ -21,6 +22,16 @@ class ProgramController extends Controller
     public function index(Request $request)
     {
         return $this->programService->index($request->institution_id);
+    }
+
+    public function update(Request $request,$id)
+    {
+        Validator::make($request->all(), $this->validationRules())->validate();
+
+        $program = Program::find($id);
+        $program->update($request->all());
+        
+        return $program;
     }
 
     public function model()

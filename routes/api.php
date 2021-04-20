@@ -39,7 +39,9 @@ Route::middleware(["auth:sanctum"])->group(function () {
   Route::resource('module', ModuleController::class);
   Route::resource('municipio', MunicipioController::class);
   Route::resource('parroquia', ParroquiaController::class);
+  
   Route::resource('program', ProgramController::class);
+  Route::post('program-update/{program_id}', [ProgramController::class, 'update']);
 
   Route::get('project/ppareport/{id}', [ProjectController::class, 'generalReport']);
   Route::get('project/available-budget/{id}', [ProjectController::class, 'availableBudget']);
