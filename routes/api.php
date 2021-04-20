@@ -61,6 +61,8 @@ Route::middleware(["auth:sanctum"])->group(function () {
   Route::resource('investment-sub-area', InvestmentSubAreaController::class);
 
   Route::post("user", [UserController::class, "register"]);
+  Route::get("user", [UserController::class, "index"]);
+  Route::patch("user/{id}", [UserController::class, "update"]);
 
   Route::delete('image/{id}', 'App\Http\Controllers\ImageController@destroy');
 });
