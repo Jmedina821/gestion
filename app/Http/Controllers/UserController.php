@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -10,6 +11,23 @@ use App\Models\User;
 
 class UserController extends Controller
 {
+
+    public $user_service;
+
+    public function __construct()
+    {
+        $this->user_service = new UserService();
+    }
+
+    public function index()
+    {
+        return $this->user_service->index();
+    }
+
+    public function update($id, Request $request) 
+    {
+        return $this->user_service->update($id, $request->all());
+    }
 
     // User Register
     public function register(Request $request)
