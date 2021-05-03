@@ -26,7 +26,7 @@ class InstitutionSeeder extends Seeder
             /* ["code" => "E009" , "parent_id" => null, "name" => "SECRETARIA DEL DESPACHO"], */
             /* ["code" => "E010" , "parent_id" => null, "name" => "SECRETARIA PRIVADA DEL GOBERNADOR"]*/
             /* ["code" => "E007" , "parent_id" => null, "name" => "SECRETARIA GENERAL DE GOBIERNO"], */
-
+            ["code" => "E011", "parent_id" => null, "name" => "GESTIÓN POLITICO TERRITORIAL", "name" => "SECRETARIA EJECUTIVA DE GESTIÓN POLITICO TERRITORIAL"]
         ];
 
         foreach ($secretarias_e as $sec_e) {
@@ -43,6 +43,7 @@ class InstitutionSeeder extends Seeder
         $unid_de_apoyo = Institution::where('name','=',"UNIDADES DE APOYO ADSCRITAS AL DESPACHO DEL GOBERNADOR")->first();
         $despacho = Institution::where('name','=',"SECRETARIA DEL DESPACHO")->first();
         $privada = Institution::where('name','=',"SECRETARIA PRIVADA DEL GOBERNADOR")->first();
+        $sec_politico_territorial = Institution::where('code', '=', 'E011')->first();
 
         $secretarias = [
             ["code" => "S001" , "parent_id" => $planificacion_y_finanzas->id, "name" => "SECRETARIA DE FINANZAS"],
@@ -82,7 +83,7 @@ class InstitutionSeeder extends Seeder
             ["code" => "S035" , "parent_id" => $protección_social->id, "name" => "FUNDACION REGIONAL EL NIÑO SIMON DEL ESTADO GUARICO"],
             ["code" => "S036" , "parent_id" => $protección_social->id, "name" => "FUNDACION ORQUESTA SINFONICA JUVENIL E INFANTIL DEL ESTADO GUARICO (FOSIJEG)"],
             ["code" => "S037" , "parent_id" => $protección_social->id, "name" => "FUNDACION ORQUESTA SINFONICA DEL ESTADO GUARICO (FOSEG)"],
-            ["code" => "S038" , "parent_id" => $protección_social->id, "name" => "ENCOMUNA"],
+            /* ["code" => "S038" , "parent_id" => $protección_social->id, "name" => "ENCOMUNA"], */
             ["code" => "S039" , "parent_id" => $protección_social->id, "name" => "RED DE BIBLIOTECAS PUBLICAS DEL ESTADO BOLIVARIANO DE GUARICO"],
             ["code" => "S040" , "parent_id" => $salud_publica->id, "name" => "SECRETARIA DE SALUD PUBLICA"],
             ["code" => "S041" , "parent_id" => $salud_publica->id, "name" => "FUNDACION PARA EL SERVICIO MEDICO INTEGRAL DEL ESTADO BOLIVARIANO DE GUARICO (FUSAMIEBG)"],
@@ -101,12 +102,14 @@ class InstitutionSeeder extends Seeder
             ["code" => "S054" , "parent_id" => $unid_de_apoyo->id, "name" => "DIRECCION GENERAL DE AUDITORIA INTERNA"],
             ["code" => "S055" , "parent_id" => $unid_de_apoyo->id, "name" => "DIRECCION GENERAL DE ATENCION CIUDADANA"],
             ["code" => "S056" , "parent_id" => $unid_de_apoyo->id, "name" => "DIRECCION DE CONSULTORIA JURIDICA"],
-            ["code" => "S057" , "parent_id" => $unid_de_apoyo->id, "name" => "DIRECCIÓN GENERAL DE INFORMATICA"]/* 
-            ["code" => "S058" , "parent_id" => $secretaria_general->id, "name" => "SECRETARIA DE GESTION TERRITORIAL"],
+            ["code" => "S057" , "parent_id" => $unid_de_apoyo->id, "name" => "DIRECCIÓN GENERAL DE INFORMATICA"],
+            /*["code" => "S058" , "parent_id" => $secretaria_general->id, "name" => "SECRETARIA DE GESTION TERRITORIAL"],
             ["code" => "S059" , "parent_id" => $secretaria_general->id, "name" => "DIRECCION DE ARCHIVO CENTRAL Y ACERVO HISTORICO"],
             ["code" => "S060" , "parent_id" => $secretaria_general->id, "name" => "DIRECCION GENERAL DE TRANSPORTE"],
             ["code" => "S061" , "parent_id" => $secretaria_general->id, "name" => "COMISION DE CONTRATACIONES PUBLICAS"], */
-
+            ["code" => "S062" , "parent_id" => $sec_politico_territorial->id, "name" => "ENCOMUNA"],
+            ["code" => "S063" , "parent_id" => $sec_politico_territorial->id, "name" => "SECRETARIA DE GESTIÓN TERRITORIAL"],
+            ["code" => "S064" , "parent_id" => $unid_de_apoyo->id, "name" => "SECRETARIA DE INSPECCIÓN Y CONTROL DE LA GESTIÓN DE GOBIERNO"],
         ];
 
         foreach ($secretarias as $sec) {

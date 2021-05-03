@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 Route::post("login", [UserController::class, "login"]);
 Route::get('image/{id}', 'App\Http\Controllers\ImageController@retrieveImage');
 Route::get('count-activities/{secretary}/{municipio}', [ActivityController::class, "countAllBySecretary"]);
+Route::get('project/ppareport/{id}', [ProjectController::class, 'generalReport']);
 
 Route::middleware(["auth:sanctum"])->group(function () {
   Route::get('institutions-filtered', [InstitutionController::class, 'filtered']);
@@ -43,7 +44,6 @@ Route::middleware(["auth:sanctum"])->group(function () {
   Route::resource('program', ProgramController::class);
   Route::post('program-update/{program_id}', [ProgramController::class, 'update']);
 
-  Route::get('project/ppareport/{id}', [ProjectController::class, 'generalReport']);
   Route::get('project/available-budget/{id}', [ProjectController::class, 'availableBudget']);
   Route::patch('project/update-status', [ProjectController::class, 'updateStatus']);
   Route::post('project/budget-increase', [ProjectController::class, 'increaseBudget']);
